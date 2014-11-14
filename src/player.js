@@ -69,6 +69,18 @@ function player(x, y, no) {
 
 		this.draw(context);
 	};
+
+	this.correctPosition = function() {
+		if (this.x + this.width > gameScreen.width + gameScreen.offset)
+			this.x = gameScreen.width - this.width + gameScreen.offset;
+		else if (this.x < gameScreen.offset)
+			this.x = gameScreen.offset;
+
+		if (this.y + this.height > gameScreen.height)
+			this.y = gameScreen.height - this.height;
+		else if (this.y < 0)
+			this.y = 0;
+	}
 }
 
 function player1Move() {
@@ -86,15 +98,7 @@ function player1Move() {
 	this.x = moveTo.x;
 	this.y = moveTo.y;
 
-	if (this.x + this.width > gameScreen.width)
-		this.x = gameScreen.width - this.width;
-	else if (this.x < 0)
-		this.x = 0;
-
-	if (this.y + this.height > gameScreen.height)
-		this.y = gameScreen.height - this.height;
-	else if (this.y < 0)
-		this.y = 0;
+	this.correctPosition();
 
 	this.centerX = this.x + this.width/2;
 	this.centerY = this.y + this.height/2;
@@ -116,15 +120,7 @@ function player2Move() {
 	this.x = moveTo.x;
 	this.y = moveTo.y;
 
-	if (this.x + this.width > gameScreen.width)
-		this.x = gameScreen.width - this.width;
-	else if (this.x < 0)
-		this.x = 0;
-
-	if (this.y + this.height > gameScreen.height)
-		this.y = gameScreen.height - this.height;
-	else if (this.y < 0)
-		this.y = 0;
+	this.correctPosition();
 
 	this.centerX = this.x + this.width/2;
 	this.centerY = this.y + this.height/2;

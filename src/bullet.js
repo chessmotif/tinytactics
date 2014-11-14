@@ -109,6 +109,9 @@ function bullet(specs, type) {
 }
 
 function draw(specs) {
+	if (drawBounds(this))
+		return;
+
 	gameScreen.canvas.fillStyle = specs.color;
 	gameScreen.canvas.beginPath();
 	gameScreen.canvas.arc(specs.x, specs.y, specs.size, 0, 2*Math.PI);
@@ -131,7 +134,7 @@ function simpleUpdate() {
 	this.y += this.speed * Math.sin(this.facing);
 
 	// check if bullet is out of bounds
-	if (this.x + this.size/2 > gameScreen.width || this.x < 0 || this.y + this.size/2 > gameScreen.height || this.y < 0)
+	if (drawBounds(this))
 		this.destroyed = true;
 }
 
