@@ -4,7 +4,9 @@
 
 var gameScreen = {
 	canvas: document.getElementById("cv").getContext("2d"),
-	width: document.getElementById("cv").width,
+	canvasWidth: document.getElementById("cv").width,
+	offset: (document.getElementById("cv").width - 800) / 2,
+	width: 800,
 	height: document.getElementById("cv").height,
 	centerX: document.getElementById("cv").width / 2,
 	centerY: document.getElementById("cv").height / 2
@@ -39,9 +41,9 @@ function main() {
 
 function drawScreen() {
 	gameScreen.canvas.fillStyle = "white";
-	gameScreen.canvas.fillRect(0, 0, gameScreen.width, gameScreen.height);
+	gameScreen.canvas.fillRect(0, 0, gameScreen.canvasWidth, gameScreen.height);
 	gameScreen.canvas.strokeStyle = "black";
-	gameScreen.canvas.strokeRect(0, 0, gameScreen.width, gameScreen.height);
+	gameScreen.canvas.strokeRect(gameScreen.offset, 0, gameScreen.width, gameScreen.height);
 
 	// center point
 	gameScreen.canvas.beginPath();
@@ -78,6 +80,11 @@ function slerp(p0, p1, t, theta) {
 	};
 
 	return point;
+}
+
+function drawBounds(point) {
+	return point.x + point.size/2 > gameScreen.width + gameScreen.offset || point.x < gameScreen.offset || 
+		   point.y + point.size/2 > gameScreen.height || point.y < 0;
 }
 
 // EXECUTED CODE
