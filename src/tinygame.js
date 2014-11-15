@@ -1,5 +1,16 @@
 // VARIABLE DECLARATIONS
 
+// UI VARIABLES
+var gameUI = {
+	frame: new Image(),
+	barWidth: 27,
+	barX: 63,
+	barMax: 60,
+	barHeight: 300,
+	barOffset: 6
+};
+gameUI.frame.src = "img/frame.png";
+
 // CANVAS VARIABLES
 
 var gameScreen = {
@@ -40,8 +51,10 @@ function main() {
 }
 
 function drawScreen() {
-	gameScreen.canvas.fillStyle = "white";
+	gameScreen.canvas.fillStyle = "#B4CDCD";
 	gameScreen.canvas.fillRect(0, 0, gameScreen.canvasWidth, gameScreen.height);
+	gameScreen.canvas.fillStyle = "#FFFFFF";
+	gameScreen.canvas.fillRect(gameScreen.offset, 0, gameScreen.width, gameScreen.height);
 	gameScreen.canvas.strokeStyle = "black";
 	gameScreen.canvas.strokeRect(gameScreen.offset, 0, gameScreen.width, gameScreen.height);
 
@@ -49,10 +62,34 @@ function drawScreen() {
 	gameScreen.canvas.beginPath();
 	gameScreen.canvas.arc(gameScreen.centerX, gameScreen.centerY, 1, 0, 2*Math.PI);
 	gameScreen.canvas.stroke();
+	
+	
+}
+
+function drawUI(){
+	// HP bar
+	gameScreen.canvas.fillStyle = "#DC143C";
+	gameScreen.canvas.fillRect(gameUI.barX, gameUI.barMax, gameUI.barWidth, gameUI.barHeight);
+	gameScreen.canvas.fillRect(gameUI.barX + gameScreen.offset + gameScreen.width, gameUI.barMax, gameUI.barWidth, gameUI.barHeight);
+	
+	// Power bar
+	gameScreen.canvas.fillStyle = "#FFFF00";
+	gameScreen.canvas.fillRect(gameUI.barX - gameUI.barWidth - gameUI.barOffset, gameUI.barMax + gameUI.barOffset, gameUI.barWidth, gameUI.barHeight);
+	gameScreen.canvas.fillRect(gameUI.barX - gameUI.barWidth - gameUI.barOffset + gameScreen.offset + gameScreen.width, gameUI.barMax + gameUI.barOffset, gameUI.barWidth, gameUI.barHeight);
+	
+	// Shield bar
+	gameScreen.canvas.fillStyle = "#00FFFF";
+	gameScreen.canvas.fillRect(gameUI.barX + gameUI.barWidth + gameUI.barOffset, gameUI.barMax + gameUI.barOffset, gameUI.barWidth, gameUI.barHeight);
+	gameScreen.canvas.fillRect(gameUI.barX + gameUI.barWidth + gameUI.barOffset + gameScreen.offset + gameScreen.width, gameUI.barMax + gameUI.barOffset, gameUI.barWidth, gameUI.barHeight);
+
+	// Metallic frame UI
+	gameScreen.canvas.drawImage(gameUI.frame, 0, 0, gameScreen.offset, gameScreen.height);
+	gameScreen.canvas.drawImage(gameUI.frame, gameScreen.offset + gameScreen.width, 0, gameScreen.offset, gameScreen.height);
 }
 
 function paint() {
 	drawScreen();
+	drawUI();
 
 	// players move
 	player1.move();
