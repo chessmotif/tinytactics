@@ -31,15 +31,15 @@ function bullet(specs, type) {
 				break;
 
 			case "ring":
-				this.ring_radius = 60;
+				this.ring_radius = 25;
 				this.onDestroy = ring_onDestroy;
 				this.destroyed = true;
 
 				this.parent.wait = 50;
 				break;
 			case "ringlet":
-				this.size = 5;
-				this.speed = 2.5;
+				this.size = 2.5;
+				this.speed = 5;
 				this.time = 250;
 				this.update = ringlet_update;
 				break;

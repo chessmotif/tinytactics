@@ -68,7 +68,9 @@ function ring_onDestroy() {
 
 		var b = new bullet(newSpecs, "ringlet");
 		b.ringlet_theta = theta + Math.PI/2;
-		b.ring_radius = this.ring_radius;
+		b.ringlet_centerX = this.x;
+		b.ringlet_centerY = this.y;
+		b.ringlet_radius = this.ring_radius;
 		this.parent.bullets.push(b);
 	}
 }
@@ -81,8 +83,12 @@ function ringlet_update() {
 	}
 
 	this.ringlet_theta += 5 * Math.PI / 180;
-	this.x += this.speed * Math.cos(this.facing) + 5 * Math.cos(this.ringlet_theta);
-	this.y += this.speed * Math.sin(this.facing) + 5 * Math.sin(this.ringlet_theta);
+
+	this.ringlet_centerX += this.speed * Math.cos(this.facing);
+	this.ringlet_centerY += this.speed * Math.sin(this.facing);
+
+	this.x = this.ringlet_centerX + this.ringlet_radius * Math.cos(this.ringlet_theta);
+	this.y = this.ringlet_centerY + this.ringlet_radius * Math.sin(this.ringlet_theta);
 }
 
 function shellring_onDestroy() {
