@@ -96,8 +96,12 @@ function paint() {
 	player2.move();
 	
 	// players shoot/get hit/whatever
-	player1.update(gameScreen.canvas, player2);
-	player2.update(gameScreen.canvas, player1);
+	playerUpdate(player1, player2);
+	playerUpdate(player2, player1);
+
+	// draw the players
+	playerDraw(player1, gameScreen.canvas);
+	playerDraw(player2, gameScreen.canvas);
 }
 
 // UTILITY FUNCTIONS
@@ -125,5 +129,4 @@ function drawBounds(point) {
 }
 
 // EXECUTED CODE
-
 main();

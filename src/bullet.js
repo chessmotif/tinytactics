@@ -63,7 +63,7 @@ function bullet(specs, type) {
 
 			case "return": 
 				this.size = 3;
-				this.speed = 10;
+				this.speed = 20;
 
 				var param = parseInt(type.split(" ")[1]);
 				this.update = return_update;
@@ -71,6 +71,7 @@ function bullet(specs, type) {
 				this.return_baseSpeed = this.speed;
 				var dist = isNaN(param)? 750 : param;
 				this.time = this.return_baseTime = dist / this.return_baseSpeed;
+				this.time = 10000;
 
 				this.return_theta = 0;
 
@@ -98,6 +99,16 @@ function bullet(specs, type) {
 
 				var dist = 75; // time = dist / speed
 				this.time = dist / this.speed;
+				break;
+
+			case "reflect":
+				this.size = 5;
+				this.speed = 10;
+
+				this.time = 20;
+				this.onDestroy = reflect_onDestroy();
+
+				//this.reflect_targetX = 
 				break;
 		}
 	}
