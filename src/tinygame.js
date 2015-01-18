@@ -35,9 +35,12 @@ var keys = {};
 // FUNCTION DEFINITIONS
 
 function initialize() {
+	// initialize keypress array
+	initkeys();
+
 	// create players
-	player1 = new player(gameScreen.centerX/2, gameScreen.centerY, 1);
-	player2 = new player(3 * gameScreen.centerX/2, gameScreen.centerY, 2);
+	player1 = new player(gameScreen.centerX/2, gameScreen.centerY, 1, 'hikari');
+	player2 = new player(3 * gameScreen.centerX/2, gameScreen.centerY, 2, 'cerise');
 }
 
 function main() {
@@ -106,12 +109,17 @@ function paint() {
 
 // UTILITY FUNCTIONS
 
+function initkeys() {
+	for (var i = 1; i <= 90; i++)
+		keys[i] = false;
+}
+
 function keydown(e) {
 	keys[e.which] = true;
 }
 
 function keyup(e) {
-	delete keys[e.which];
+	keys[e.which] = false;
 }
 
 function slerp(p0, p1, t, theta) {
