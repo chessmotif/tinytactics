@@ -136,8 +136,8 @@ function slerp(p0, p1, t, theta) {
 }
 
 function drawBounds(point) {
-	return point.x + point.size/2 > gameScreen.width + gameScreen.offset || point.x < gameScreen.offset || 
-		   point.y + point.size/2 > gameScreen.height || point.y < 0;
+	return point.x > gameScreen.width + gameScreen.offset || point.x < gameScreen.offset || 
+		   point.y > gameScreen.height || point.y < 0;
 }
 
 // EXECUTED CODE

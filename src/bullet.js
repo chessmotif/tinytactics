@@ -8,13 +8,23 @@ function bullet(specs, type) {
 		y: specs.y
 	};
 
+	this.facing = specs.facing;
+	this.enemy = specs.enemy;
+
+	this.destroyed = false;
+
+	// default bullet specs
+	this.size = 5;
+	this.speed = 10;
+	this.time = INF_TIME;
+
 	// default functions
 	this.draw = drawBullet;
 	this.update = simpleUpdate;
 }
 
 function drawBullet(specs) {
-	if (drawBounds(this))
+	if (drawBounds(this.pos))
 		return;
 
 	gameScreen.canvas.fillStyle = specs.color;
@@ -35,20 +45,19 @@ function simpleUpdate() {
 		return;
 
 	// update position
-	this.x += this.speed * Math.cos(this.facing);
-	this.y += this.speed * Math.sin(this.facing);
+	this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
 
 	// check if bullet is out of bounds
-	if (drawBounds(this))
+	if (drawBounds(this.pos))
 		this.destroyed = true;
 }
 
-function defaultSpecs() {
+function defaultSpecs(p) {
 	var b = {
-		player: this,
-		x: this.pos.x,
-		y: this.pos.y,
-		facing: this.facing
+		player: p,
+		x: p.pos.x,
+		y: p.pos.y,
+		facing: p.facing
 	};
 
 	return b;

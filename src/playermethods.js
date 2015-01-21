@@ -36,7 +36,7 @@ function playerShoot() {
 function updateBullets() {
 	for (var i = 0; i < this.bullets.length; i++) {
 		if (this.bullets[i].destroyed) {
-			if (this.bullets[i].onDestroy === undefined)
+			if (!(this.bullets[i].onDestroy === undefined))
 				this.bullets[i].onDestroy();
 			this.bullets.splice(i, 1);
 		}
@@ -118,8 +118,8 @@ function playerDraw(player, context) {
 	// draw bullets
 	for (i = 0; i < player.bullets.length; i++) {
 		var toDraw = {
-			x: player.bullets[i].x,
-			y: player.bullets[i].y,
+			x: player.bullets[i].pos.x,
+			y: player.bullets[i].pos.y,
 			size: player.bullets[i].size,
 			color: (player.stats.playerID == 1)? 'green' : 'purple'
 			// dose kek
