@@ -20,7 +20,8 @@ var gameScreen = {
 	width: 800,
 	height: document.getElementById("cv").height,
 	centerX: document.getElementById("cv").width / 2,
-	centerY: document.getElementById("cv").height / 2
+	centerY: document.getElementById("cv").height / 2,
+	radius: document.getElementById("cv").height / 2 - 10
 };
 
 // INITIALIZED VARIABLES
@@ -66,7 +67,10 @@ function drawScreen() {
 	gameScreen.canvas.arc(gameScreen.centerX, gameScreen.centerY, 1, 0, 2*Math.PI);
 	gameScreen.canvas.stroke();
 	
-	
+	// circle arena
+	gameScreen.canvas.beginPath();
+	gameScreen.canvas.arc(gameScreen.centerX, gameScreen.centerY, gameScreen.radius, 0, 2*Math.PI);
+	gameScreen.canvas.stroke();
 }
 
 function drawUI(){

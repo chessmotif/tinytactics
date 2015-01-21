@@ -10,33 +10,19 @@ function setCharacter(player, charName) {
 	}
 }
 
-
+// characters
 function hikari_shot1() {
-	var b = {
-		player: this,
-		x: this.centerX,
-		y: this.centerY,
-		facing: this.facing
-	};
-	this.bullets.push(new bullet(b, "shellring"));
+	this.bullets.push(new bullet(defaultSpecs(), "shellring"));
 }
 
 function hikari_shot2() {
-	var b = {
-		player: this,
-		x: this.centerX,
-		y: this.centerY,
-		facing: this.facing
-	};
-	this.bullets.push(new bullet(b, "return"));
+	this.bullets.push(new bullet(defaultSpecs(), "return"));
+}
+
+function cerise_shot1() {
+
 }
 
 function default_shot() {
-	var b = {
-		player: this,
-		x: this.centerX,
-		y: this.centerY,
-		facing: this.facing
-	};
-	this.bullets.push(new bullet(b));
+	this.bullets.push(new bullet(defaultSpecs()));
 }

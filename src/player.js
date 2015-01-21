@@ -19,8 +19,10 @@ function player(xpos, ypos, no, name) {
 	this.width = 15;
 	this.height = 20;
 
-	this.centerX = this.pos.x + this.width / 2;
-	this.centerY = this.pos.y + this.height / 2;
+	this.drawPos = {
+		x: this.pos.x - this.width / 2,
+		y: this.pos.y - this.height / 2
+	};
 
 	this.bullets = [];
 	this.facing = 0;
@@ -47,19 +49,8 @@ function player(xpos, ypos, no, name) {
 	this.move = playerMove;
 	this.shoot = playerShoot;
 	this.takeInput = playerInput;
+	this.correctPosition = correctPosition;
+	this.updateDrawPos = updateDrawPos;
 
 	setCharacter(this, name);
-
-	this.correctPosition = function() {
-		if (this.pos.x + this.width > gameScreen.width + gameScreen.offset)
-			this.pos.x = gameScreen.width - this.width + gameScreen.offset;
-		else if (this.pos.x < gameScreen.offset)
-			this.pos.x = gameScreen.offset;
-
-		if (this.pos.y + this.height > gameScreen.height)
-			this.pos.y = gameScreen.height - this.height;
-		else if (this.pos.y < 0)
-			this.pos.y = 0;
-
-	};
 }

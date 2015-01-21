@@ -1,125 +1,19 @@
-// INSTANTIATE BULLET
+var INF_TIME = 1000;
 
-var INF_TIME = 1000; // bullet should only be destroyed when hitting another player or hitting the bounds
-
-// specs contain pointer to player, x, y, facing
 function bullet(specs, type) {
 	this.parent = specs.player;
-	this.x = specs.x;
-	this.y = specs.y;
-	this.facing = specs.facing;
 
-	this.destroyed = false;
-
-	// default bullet specs
-	this.size = 5;
-	this.speed = 10;
-	this.time = INF_TIME;
+	this.pos = {
+		x: specs.x,
+		y: specs.y
+	};
 
 	// default functions
-	this.draw = draw;
+	this.draw = drawBullet;
 	this.update = simpleUpdate;
-	this.onDestroy = simpleDestroy;
-
-
-	// non-defaults, override as necessary
-	if (typeof type != "undefined") {
-		switch(type.split(" ")[0]) {
-			case "timed":
-				var param = parseInt(type.split(" ")[1]);
-				this.time = isNaN(param)? 15 : param;
-				break;
-
-			case "ring":
-				this.ring_radius = 25;
-				this.onDestroy = ring_onDestroy;
-				this.destroyed = true;
-
-				this.parent.wait = 50;
-				break;
-			case "ringlet":
-				this.size = 2.5;
-				this.speed = 5;
-				this.time = 250;
-				this.update = ringlet_update;
-				break;
-
-			case "shellring":
-				this.shellring_radius = 60;
-				this.onDestroy = shellring_onDestroy;
-				this.destroyed = true;
-
-				this.parent.wait = 50;
-				break;
-			case "shellringlet":
-				this.size = 3;
-				this.speed = 5;
-				this.facing = this.shellring_theta;
-				this.shellring_rotSpeed = 1 * Math.PI / 180;
-				this.time = this.shellring_baseTime = 250;
-
-				this.update = shellringlet_update;
-				break;
-
-			case "return": 
-				this.size = 3;
-				this.speed = 20;
-
-				var param = parseInt(type.split(" ")[1]);
-				this.update = return_update;
-
-				this.return_baseSpeed = this.speed;
-				var dist = isNaN(param)? 750 : param;
-				this.time = this.return_baseTime = dist / this.return_baseSpeed;
-				this.time = 10000;
-
-				this.return_theta = 0;
-
-				this.parent.wait = 20;
-				break;
-			case "subreturn":
-				this.size = 2;
-
-				this.update = subreturn_update;
-
-				break;
-
-			case "shrapnel":
-				this.time = 15;
-				this.parent.wait = 20;
-
-				var param = parseInt(type.split(" ")[1]);
-				this.shrapnel_Angle = isNaN(param)? 360 : param;
-
-				this.onDestroy = shrapnel_onDestroy;
-				break;
-			case "subshrapnel":
-				this.size = 2.5;
-				this.speed = 5 + 5 * Math.random();
-
-				var dist = 75; // time = dist / speed
-				this.time = dist / this.speed;
-				break;
-
-			case "reflect":
-				this.size = 5;
-				this.speed = 10;
-
-				this.time = 20;
-				this.onDestroy = reflect_onDestroy();
-
-				//this.reflect_targetX = 
-				break;
-		}
-	}
-	else {
-		// default bullet cooldown
-		this.parent.wait = 20;
-	}
-
 }
 
-function draw(specs) {
+function drawBullet(specs) {
 	if (drawBounds(this))
 		return;
 
@@ -136,7 +30,7 @@ function simpleUpdate() {
 	else
 		this.destroyed = true;
 
-	// if the bullet is destroyed, meh
+	// if the bullet is destroyed, stop update
 	if (this.destroyed)
 		return;
 
@@ -149,5 +43,13 @@ function simpleUpdate() {
 		this.destroyed = true;
 }
 
-function simpleDestroy() {
+function defaultSpecs() {
+	var b = {
+		player: this,
+		x: this.pos.x,
+		y: this.pos.y,
+		facing: this.facing
+	};
+
+	return b;
 }
