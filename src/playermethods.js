@@ -107,13 +107,19 @@ function correctPosition() {
 }
 
 // non-method functions
+
+
 function playerDraw(player, context) {
 	// draw player
+	/*
 	context.fillStyle = (player.stats.playerID == 1)? "blue" : "red";
 	context.fillRect(player.drawPos.x, player.drawPos.y, player.width, player.height);
 	context.strokeStyle = "black";
 	context.lineWidth = "1";
 	context.strokeRect(player.drawPos.x, player.drawPos.y, player.width, player.height);
+	*/
+
+	console.log(player.stats.playerID + " - " + player.facing);
 
 	// draw bullets
 	for (i = 0; i < player.bullets.length; i++) {

@@ -11,6 +11,8 @@ var gameUI = {
 };
 gameUI.frame.src = "img/frame.png";
 
+
+
 // CANVAS VARIABLES
 
 var gameScreen = {
@@ -55,7 +57,7 @@ function main() {
 }
 
 function drawScreen() {
-	gameScreen.canvas.fillStyle = "#B4CDCD";
+	gameScreen.canvas.fillStyle = "#FFFFFF";
 	gameScreen.canvas.fillRect(0, 0, gameScreen.canvasWidth, gameScreen.height);
 	gameScreen.canvas.fillStyle = "#FFFFFF";
 	gameScreen.canvas.fillRect(gameScreen.offset, 0, gameScreen.width, gameScreen.height);
@@ -73,6 +75,13 @@ function drawScreen() {
 	gameScreen.canvas.stroke();
 }
 
+function drawUI(){
+	gameScreen.canvas.fillStyle = "green";
+	gameScreen.canvas.fillRect(250,10,250,20);
+	gameScreen.canvas.fillRect(250 + 350,10,250,20);
+
+}
+/*
 function drawUI(){
 	// HP bar
 	gameScreen.canvas.fillStyle = "#DC143C";
@@ -93,14 +102,25 @@ function drawUI(){
 	gameScreen.canvas.drawImage(gameUI.frame, 0, 0, gameScreen.offset, gameScreen.height);
 	gameScreen.canvas.drawImage(gameUI.frame, gameScreen.offset + gameScreen.width, 0, gameScreen.offset, gameScreen.height);
 }
-
+*/
 function paint() {
 	drawScreen();
 	drawUI();
 
+	player1.sprite.idleSprite.update();
+	player2.sprite.idleSprite.update();
+
+	// player sprite
+	player1.sprite.idleSprite.draw(gameScreen.canvas, player1.drawPos.x, player1.drawPos.y);
+	player2.sprite.idleSprite.draw(gameScreen.canvas, player2.drawPos.x, player2.drawPos.y);
+
+
+
 	// players move
 	player1.move();
 	player2.move();
+
+	
 	
 	// players shoot/get hit/whatever
 	playerUpdate(player1, player2);

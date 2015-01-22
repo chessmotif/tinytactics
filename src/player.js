@@ -2,6 +2,8 @@
 
 function player(xpos, ypos, no, name) {
 	// variables
+
+
 	this.stats = {
 		playerID: no,
 		HP: 10000,
@@ -16,8 +18,8 @@ function player(xpos, ypos, no, name) {
 		y: ypos
 	};
 
-	this.width = 15;
-	this.height = 20;
+	this.width = 40;
+	this.height = 50;
 
 	this.drawPos = {
 		x: this.pos.x - this.width / 2,
@@ -27,11 +29,8 @@ function player(xpos, ypos, no, name) {
 	this.bullets = [];
 	this.facing = 0;
 
-	this.state = 'idle';
+	this.state = 'Idle';
 	this.wait = 0;
-
-	// add this in, yana
-	this.sprite = 0;
 
 	// inputs
 
@@ -53,4 +52,8 @@ function player(xpos, ypos, no, name) {
 	this.updateDrawPos = updateDrawPos;
 
 	setCharacter(this, name);
+
+	// add this in, yana
+	this.name = name;
+	this.sprite = new spriteSheet(this);
 }
