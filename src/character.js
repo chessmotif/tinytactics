@@ -12,12 +12,21 @@ function setCharacter(player, charName) {
 
 // characters
 function hikari_shot1() {
+	if (this.cooldown.shot1 > 0)
+		return;
+	else {
+		this.cooldown.id |= 8;
+		this.cooldown.shot1 = 30;
+	}
+ 	
 	var mainshot = new bullet(defaultSpecs(this));
 
 
 	// main bullet code
-	//mainshot.speed = 3;
-	//mainshot.size = 7.5;
+	mainshot.speed = 3;
+	mainshot.size = 7.5;
+
+	this.bullets.push(mainshot);
 
 	for (var i = 0; i < 5; i++) {
 		var sideshot1 = new bullet(defaultSpecs(this));
@@ -76,27 +85,41 @@ function hikari_shot1() {
 }
 
 function hikari_shot2() {
-	var mainshot = new bullet(defaultSpecs(this));
+	if (this.cooldown.shot2 > 0)
+		return;
+	else {
+		this.cooldown.id |= 4;
+		this.cooldown.shot2 = 50;
+	}
 
-	mainshot.speed = 1.5;
-	mainshot.size = 50;
-	mainshot.enemy = this.enemy;
+	var shot1 = new bullet(defaultSpecs(this));
 
-	mainshot.update = function() {
-		this.size-=0.2;
-		if (this.size <= 1)
+	shot1.speed = 5;
+	shot1.size = 20;
+	shot1.facing = this.facing - Math.PI/2;
+	shot1.enemy = this.enemy;
+
+	shot1.update = function() {
+
+		if (this.size <= 1 || this.speed <= 0)
 			this.destroyed = true;
 
 		if (this.destroyed)
 			return;
 
-		this.pos = Point2D.plus(this.pos, Point2D.norm(Point2D.minus(this.enemy.pos, this.pos),this.speed));
+		var angle = Math.atan2(this.pos.y - this.enemy.pos.y, this.pos.x - this.enemy.pos.x);
+		var dist = - Math.abs(angle - this.facing);
+
+		if (dist >= 5 * Math.PI / 180 || dist < - 5 * Math.PI / 180)
+			this.facing += 5 * Math.PI / 180;
+ 
+		this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
 
 		if (drawBounds(this.pos))
 			this.destroyed = true;
 	}
 
-	this.bullets.push(mainshot);
+	this.bullets.push(shot1);
 }
 
 function default_shot() {

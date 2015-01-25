@@ -2,8 +2,6 @@
 
 function player(xpos, ypos, no, name) {
 	// variables
-
-
 	this.stats = {
 		playerID: no,
 		HP: 10000,
@@ -43,6 +41,14 @@ function player(xpos, ypos, no, name) {
 		shot3: false
 	};
 
+	this.cooldown = {
+		id: 0,
+		shot1: 0,
+		shot2: 0,
+		shot3: 0,
+		dash: 0
+	};
+
 	// methods
 	this.updateBullets = updateBullets;
 	this.move = playerMove;
@@ -50,6 +56,7 @@ function player(xpos, ypos, no, name) {
 	this.takeInput = playerInput;
 	this.correctPosition = correctPosition;
 	this.updateDrawPos = updateDrawPos;
+	this.updateCooldowns = updateCooldowns;
 
 	setCharacter(this, name);
 

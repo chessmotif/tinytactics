@@ -119,8 +119,6 @@ function playerDraw(player, context) {
 	context.strokeRect(player.drawPos.x, player.drawPos.y, player.width, player.height);
 	*/
 
-	console.log(player.stats.playerID + " - " + player.facing);
-
 	// draw bullets
 	for (i = 0; i < player.bullets.length; i++) {
 		var toDraw = {
@@ -147,10 +145,17 @@ function playerUpdate(player, enemy) {
 	};
 
 	player.facing = Math.atan2(enemy.pos.y - player.pos.y, enemy.pos.x - player.pos.x);
-
+	player.updateCooldowns();
 	player.updateBullets();
 
 	if (player.wait > 0)
 		player.wait--;
 	else player.shoot();
+}
+
+function updateCooldowns() {
+	this.cooldown.shot1--;
+	this.cooldown.shot2--;
+	// this.cooldown.shot3--;
+	// this.cooldown.dash--;
 }
