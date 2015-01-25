@@ -75,10 +75,30 @@ function drawScreen() {
 	gameScreen.canvas.stroke();
 }
 
-function drawUI(){
-	gameScreen.canvas.fillStyle = "green";
+function drawUI1(){
+	gameScreen.canvas.fillStyle = "#ADFF2F";
 	gameScreen.canvas.fillRect(250,10,250,20);
 	gameScreen.canvas.fillRect(250 + 350,10,250,20);
+
+	gameScreen.canvas.strokeStyle = "black";
+	gameScreen.canvas.strokeRect(250 + 350,10,250,20);
+	gameScreen.canvas.strokeRect(250,10,250,20);
+
+	gameScreen.canvas.fillStyle = "#66FFFF";
+	gameScreen.canvas.fillRect(200,30,200,15);
+	gameScreen.canvas.fillRect(200 + 500,30,200,15);
+
+	gameScreen.canvas.strokeStyle = "black";
+	gameScreen.canvas.strokeRect(200,30,200,15);
+	gameScreen.canvas.strokeRect(200 + 500,30,200,15);
+
+	gameScreen.canvas.fillStyle = "#FF4500";
+	gameScreen.canvas.fillRect(150 + 10,10,100,100);
+	gameScreen.canvas.fillRect(150 + 700 -10,10,100,100);
+
+	gameScreen.canvas.fillStyle = "black";
+	gameScreen.canvas.font = "40px Lucida Console";
+	gameScreen.canvas.fillText("60", gameScreen.centerX-25, 40);
 
 }
 /*
@@ -105,7 +125,7 @@ function drawUI(){
 */
 function paint() {
 	drawScreen();
-	drawUI();
+	drawUI1();
 
 	player1.sprite.idleSprite.update();
 	player2.sprite.idleSprite.update();
