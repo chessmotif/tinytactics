@@ -8,7 +8,7 @@ var p1 = {
 	right: 39,
 	shot1: 90,
 	shot2: 88,
-	//shot3: ,
+	shot3: 67,
 	dash: 86
 };
 

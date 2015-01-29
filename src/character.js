@@ -4,6 +4,7 @@ function setCharacter(player, charName) {
 		case 'hikari':
 			player.shot1 = hikari_shot1;
 			player.shot2 = hikari_shot2;
+			player.shot3 = hikari_shot3;
 			break;
 		default:
 			player.shot1 = default_shot;
@@ -15,12 +16,31 @@ function hikari_shot1() {
 	if (this.cooldown.shot1 > 0)
 		return;
 	else {
-		this.cooldown.id |= 8;
-		this.cooldown.shot1 = 30;
+		// this.cooldown.id |= 8;
+		this.cooldown.shot1 = 50;
+	}
+
+	for (var i = 0; i < 10; i++) {
+		var mainshot = new bullet(defaultSpecs(this));
+
+		mainshot.facing = this.facing - 45 * Math.PI / 180 + 90 * Math.random() * Math.PI / 180;
+		mainshot.speed = 15;
+		mainshot.size = 2;
+		mainshot.time = 5;
+
+		this.bullets.push(mainshot);
+	}
+}
+
+function hikari_shot2() {
+	if (this.cooldown.shot2 > 0)
+		return;
+	else {
+		// this.cooldown.id |= 4;
+		this.cooldown.shot2 = 30;
 	}
  	
 	var mainshot = new bullet(defaultSpecs(this));
-
 
 	// main bullet code
 	mainshot.speed = 3;
@@ -84,42 +104,56 @@ function hikari_shot1() {
 	}
 }
 
-function hikari_shot2() {
-	if (this.cooldown.shot2 > 0)
+function hikari_shot3() {
+	if (this.cooldown.shot3 > 0)
 		return;
 	else {
-		this.cooldown.id |= 4;
-		this.cooldown.shot2 = 50;
+		// this.cooldown.id |= 2;
+		this.cooldown.shot3 = 25;
 	}
 
-	var shot1 = new bullet(defaultSpecs(this));
+	for (var i = -3; i < 4; i++) {
+		var shot = new bullet(defaultSpecs(this));
 
-	shot1.speed = 5;
-	shot1.size = 20;
-	shot1.facing = this.facing - Math.PI/2;
-	shot1.enemy = this.enemy;
+		shot.facing = this.facing + i * 30 * Math.PI / 180;
+		shot.speed = -1;
+		shot.size = 2.5;
 
-	shot1.update = function() {
+		shot.timeout = 50;
+		shot.timeout_wait = 10;
 
-		if (this.size <= 1 || this.speed <= 0)
-			this.destroyed = true;
+		shot.enemy = this.enemy;
+		shot.update = hikari_shot3_update;
 
-		if (this.destroyed)
-			return;
+		this.bullets.push(shot);
+	}
+}
 
-		var angle = Math.atan2(this.pos.y - this.enemy.pos.y, this.pos.x - this.enemy.pos.x);
-		var dist = - Math.abs(angle - this.facing);
+function hikari_shot3_update() {
+	// if the bullet is destroyed, stop update
+	if (this.destroyed)
+		return;
 
-		if (dist >= 5 * Math.PI / 180 || dist < - 5 * Math.PI / 180)
-			this.facing += 5 * Math.PI / 180;
- 
+	// update position
+	if (this.timeout > 0) {
 		this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
-
-		if (drawBounds(this.pos))
-			this.destroyed = true;
+		this.timeout--;
+	}
+	else if (this.timeout_wait > 0) {
+		this.timeout_wait--;
+	}
+	else if (this.timeout_wait == 0) {
+		this.facing = Math.atan2(this.enemy.pos.y - this.pos.y, this.enemy.pos.x - this.pos.x);
+		this.speed = 15;
+		this.timeout_wait--;
+	}
+	else {
+		this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
 	}
 
-	this.bullets.push(shot1);
+	// check if bullet is out of bounds
+	if (drawBounds(this.pos))
+		this.destroyed = true;
 }
 
 function default_shot() {

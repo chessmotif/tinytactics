@@ -60,7 +60,7 @@ function playerInput() {
 			this.inputs.dash = keys[p1.dash];
 			this.inputs.shot1 = keys[p1.shot1];
 			this.inputs.shot2 = keys[p1.shot2];
-			// this.inputs.shot3 = keys[p1.shot3];
+			this.inputs.shot3 = keys[p1.shot3];
 			break;
 		case 2:
 			if (keys[p2.up]) this.inputs.vertical = -1;
@@ -81,29 +81,29 @@ function playerInput() {
 function correctPosition() {
 	// OUT OF SCREEN CODE
 	
-	// if (this.pos.x + this.width > gameScreen.width + gameScreen.offset)
-	// 	this.pos.x = gameScreen.width - this.width + gameScreen.offset;
-	// else if (this.pos.x < gameScreen.offset)
-	// 	this.pos.x = gameScreen.offset;
+	if (this.pos.x + this.width > gameScreen.width + gameScreen.offset)
+		this.pos.x = gameScreen.width - this.width + gameScreen.offset;
+	else if (this.pos.x < gameScreen.offset)
+		this.pos.x = gameScreen.offset;
 
-	// if (this.pos.y + this.height > gameScreen.height)
-	// 	this.pos.y = gameScreen.height - this.height;
-	// else if (this.pos.y < 0)
-	// 	this.pos.y = 0;
+	if (this.pos.y + this.height > gameScreen.height)
+		this.pos.y = gameScreen.height - this.height;
+	else if (this.pos.y < 0)
+		this.pos.y = 0;
 	
 
 	// circle code
-	var midpoint = {
-		x: gameScreen.centerX,
-		y: gameScreen.centerY
-	};
+	// var midpoint = {
+	// 	x: gameScreen.centerX,
+	// 	y: gameScreen.centerY
+	// };
 
-	var centerVector = Point2D.minus(this.pos, midpoint);
+	// var centerVector = Point2D.minus(this.pos, midpoint);
 
-	if (Point2D.dist(centerVector, Point2D.ZERO) > gameScreen.radius) {
-		centerVector = Point2D.norm(centerVector, gameScreen.radius);
-		this.pos = Point2D.plus(midpoint, centerVector);
-	}
+	// if (Point2D.dist(centerVector, Point2D.ZERO) > gameScreen.radius) {
+	// 	centerVector = Point2D.norm(centerVector, gameScreen.radius);
+	// 	this.pos = Point2D.plus(midpoint, centerVector);
+	// }
 }
 
 // non-method functions
@@ -156,6 +156,6 @@ function playerUpdate(player, enemy) {
 function updateCooldowns() {
 	this.cooldown.shot1--;
 	this.cooldown.shot2--;
-	// this.cooldown.shot3--;
+	this.cooldown.shot3--;
 	// this.cooldown.dash--;
 }
