@@ -134,14 +134,10 @@ function paint() {
 	player1.sprite.idleSprite.draw(gameScreen.canvas, player1.drawPos.x, player1.drawPos.y);
 	player2.sprite.idleSprite.draw(gameScreen.canvas, player2.drawPos.x, player2.drawPos.y);
 
-
-
 	// players move
 	player1.move();
 	player2.move();
 
-	
-	
 	// players shoot/get hit/whatever
 	playerUpdate(player1, player2);
 	playerUpdate(player2, player1);

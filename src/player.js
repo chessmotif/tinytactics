@@ -8,7 +8,7 @@ function player(xpos, ypos, no, name) {
 		heat: 0,
 		power: 0,
 		moveSpeed: 2,
-		dashSpeed: 7.5
+		dashSpeed: 3
 	};
 
 	this.pos = {
@@ -26,6 +26,8 @@ function player(xpos, ypos, no, name) {
 
 	this.bullets = [];
 	this.facing = 0;
+	this.dashTimer = 0;
+	this.dashDirection = 0;
 
 	this.state = 'Idle';
 	this.wait = 0;

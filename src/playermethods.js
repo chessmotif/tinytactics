@@ -4,10 +4,17 @@ function playerMove() {
 		y: this.inputs.vertical
 	};
 
-	if (this.inputs.dash)
+	if (this.inputs.dash) {
 		move = Point2D.scale(move, this.stats.dashSpeed);
-	else
+		this.dashTimer = 15;
+		this.dashDirection = move;
+	}
+	else if (this.dashTimer > 0) {
 		move = Point2D.scale(move, this.stats.moveSpeed);
+		var dash = Point2D.scale(this.dashDirection, this.stats.dashSpeed);
+		move = Point2D.plus(move, dash);
+		this.dashTimer--;
+	}
 
 	this.pos = Point2D.plus(this.pos, move);
 
@@ -81,13 +88,13 @@ function playerInput() {
 function correctPosition() {
 	// OUT OF SCREEN CODE
 	
-	if (this.pos.x + this.width > gameScreen.width + gameScreen.offset)
-		this.pos.x = gameScreen.width - this.width + gameScreen.offset;
+	if (this.pos.x > gameScreen.width + gameScreen.offset)
+		this.pos.x = gameScreen.width + gameScreen.offset;
 	else if (this.pos.x < gameScreen.offset)
 		this.pos.x = gameScreen.offset;
 
-	if (this.pos.y + this.height > gameScreen.height)
-		this.pos.y = gameScreen.height - this.height;
+	if (this.pos.y > gameScreen.height)
+		this.pos.y = gameScreen.height;
 	else if (this.pos.y < 0)
 		this.pos.y = 0;
 	
@@ -157,5 +164,4 @@ function updateCooldowns() {
 	this.cooldown.shot1--;
 	this.cooldown.shot2--;
 	this.cooldown.shot3--;
-	// this.cooldown.dash--;
 }
