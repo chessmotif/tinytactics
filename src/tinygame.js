@@ -93,8 +93,8 @@ function drawUI1(){
 	gameScreen.canvas.strokeRect(200 + 500,30,200,15);
 
 	gameScreen.canvas.fillStyle = "#FF4500";
-	gameScreen.canvas.fillRect(150 + 10,10,100,100);
-	gameScreen.canvas.fillRect(150 + 700 -10,10,100,100);
+	gameScreen.canvas.fillRect(150 + 50,10,50,50);
+	gameScreen.canvas.fillRect(150 + 710 -10,10,50,50);
 
 	gameScreen.canvas.fillStyle = "black";
 	gameScreen.canvas.font = "40px Lucida Console";
