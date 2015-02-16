@@ -34,5 +34,5 @@ function animatedSprite(player, source, tileWidth, tileHeight, frames) {
 }
 
 function spriteSheet(player){
-	this.idleSprite = new animatedSprite(player, "img/" + player.name + "Idle" + "R.png", player.width, player.height, 2);
+	this.idleSprite = new animatedSprite(player, "img/" + player.name + "Idle" + "R.png", player.width, player.height, 8);
 }
