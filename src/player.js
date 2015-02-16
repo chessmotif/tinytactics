@@ -8,7 +8,7 @@ function player(xpos, ypos, no, name) {
 		heat: 0,
 		power: 0,
 		moveSpeed: 2,
-		dashSpeed: 3
+		dashSpeed: 2.5
 	};
 
 	this.pos = {
@@ -22,6 +22,13 @@ function player(xpos, ypos, no, name) {
 	this.drawPos = {
 		x: this.pos.x - this.width / 2,
 		y: this.pos.y - this.height / 2
+	};
+
+	this.hitbox = {
+		x: this.drawPos.x,
+		y: this.drawPos.y,
+		width: this.width,
+		height: this.height
 	};
 
 	this.bullets = [];

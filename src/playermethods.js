@@ -6,7 +6,7 @@ function playerMove() {
 
 	if (this.inputs.dash) {
 		move = Point2D.scale(move, this.stats.dashSpeed);
-		this.dashTimer = 15;
+		this.dashTimer = 20;
 		this.dashDirection = move;
 	}
 	else if (this.dashTimer > 0) {
