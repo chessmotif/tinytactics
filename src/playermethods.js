@@ -29,6 +29,7 @@ function updateDrawPos() {
 	};
 
 	this.drawPos = Point2D.minus(this.pos, t);
+	this.hitbox.pos = this.drawPos;
 }
 
 function playerShoot() {
@@ -81,7 +82,7 @@ function playerInput() {
 			this.inputs.dash = keys[p2.dash];
 			this.inputs.shot1 = keys[p2.shot1];
 			this.inputs.shot2 = keys[p2.shot2];
-			// this.inputs.shot3 = keys[p2.shot3];
+			this.inputs.shot3 = keys[p2.shot3];
 	}
 }
 

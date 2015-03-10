@@ -19,6 +19,6 @@ var p2 = {
 	right: 68,
 	shot1: 72,
 	shot2: 74,
-	//shot3: ,
+	shot3: 75,
 	dash: 76
 };

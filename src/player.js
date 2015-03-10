@@ -25,8 +25,7 @@ function player(xpos, ypos, no, name) {
 	};
 
 	this.hitbox = {
-		x: this.drawPos.x,
-		y: this.drawPos.y,
+		pos: this.drawPos,
 		width: this.width,
 		height: this.height
 	};

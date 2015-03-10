@@ -18,6 +18,12 @@ function bullet(specs, type) {
 	this.speed = 10;
 	this.time = INF_TIME;
 
+	this.hitbox = {
+		pos: Point2D.flatAdd(this.pos, -this.size/2),
+		width: this.size,
+		height: this.size
+	};
+
 	// default functions
 	this.draw = drawBullet;
 	this.update = simpleUpdate;
@@ -40,6 +46,16 @@ function simpleUpdate() {
 	else
 		this.destroyed = true;
 
+	this.hitbox = {
+		pos: Point2D.flatAdd(this.pos, -this.size/2),
+		width: this.size,
+		height: this.size
+	};
+
+	if (hitboxCollisionCheck(this.hitbox, this.enemy.hitbox)) {
+		this.destroyed = true;
+	}
+
 	// if the bullet is destroyed, stop update
 	if (this.destroyed)
 		return;
@@ -52,12 +68,20 @@ function simpleUpdate() {
 		this.destroyed = true;
 }
 
+function hitboxCollisionCheck(h1, h2) {
+	return 	h2.pos.x <= h1.pos.x + h1.width &&
+			h1.pos.x <= h2.pos.x + h2.width &&
+			h2.pos.y <= h1.pos.y + h1.height &&
+			h1.pos.y <= h2.pos.y + h2.height;
+}
+
 function defaultSpecs(p) {
 	var b = {
 		player: p,
 		x: p.pos.x,
 		y: p.pos.y,
-		facing: p.facing
+		facing: p.facing,
+		enemy: p.enemy
 	};
 
 	return b;

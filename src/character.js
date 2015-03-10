@@ -64,6 +64,16 @@ function hikari_shot2() {
 				this.facing -= this.rotationVelocity;
 			}
 
+			this.hitbox = {
+				pos: Point2D.flatAdd(this.pos, -this.size/2),
+				width: this.size,
+				height: this.size
+			};
+
+			if (hitboxCollisionCheck(this.hitbox, this.enemy.hitbox)) {
+				this.destroyed = true;
+			}
+
 			if (this.destroyed)
 				return;
 
@@ -90,6 +100,16 @@ function hikari_shot2() {
 					this.rotationAccel = 2 * Math.PI / 180;
 
 				this.facing += this.rotationVelocity;
+			}
+
+			this.hitbox = {
+				pos: Point2D.flatAdd(this.pos, -this.size/2),
+				width: this.size,
+				height: this.size
+			};
+
+			if (hitboxCollisionCheck(this.hitbox, this.enemy.hitbox)) {
+				this.destroyed = true;
 			}
 
 			if (this.destroyed)
@@ -149,6 +169,16 @@ function hikari_shot3_update() {
 	}
 	else {
 		this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
+	}
+
+	this.hitbox = {
+		pos: Point2D.flatAdd(this.pos, -this.size/2),
+		width: this.size,
+		height: this.size
+	};
+
+	if (hitboxCollisionCheck(this.hitbox, this.enemy.hitbox)) {
+		this.destroyed = true;
 	}
 
 	// check if bullet is out of bounds

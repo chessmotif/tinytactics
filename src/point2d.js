@@ -7,6 +7,7 @@ var Point2D = {
 	ZERO: p_00,
 	plus: addVectors,
 	minus: subtractVectors,
+	flatAdd: addScalar,
 	scale: scalarProduct,
 	rotate: pointRotate,
 	norm: normalize,
@@ -33,6 +34,15 @@ function subtractVectors(a, b) {
 
 	return p;
 } 
+
+function addScalar(a, b) {
+	var p = {
+		x: a.x + b,
+		y: a.y + b
+	};
+	
+	return p;
+}
 
 // b(scalar) * a(vector)
 function scalarProduct(a, b) {
