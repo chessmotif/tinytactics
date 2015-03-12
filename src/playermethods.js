@@ -138,7 +138,7 @@ function playerDraw(player, context) {
 			x: player.bullets[i].pos.x,
 			y: player.bullets[i].pos.y,
 			size: player.bullets[i].size,
-			color: (player.stats.playerID == 1)? 'green' : 'purple'
+			color: (player.stats.playerID == 1)? '#fffd5f' : '#f69aea'
 		};
 
 		if (!player.bullets[i].destroyed) {

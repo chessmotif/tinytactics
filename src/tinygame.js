@@ -26,6 +26,7 @@ function initialize() {
 	// initialize the frame
 	gameUI.frame.src = "img/frame.png";
 	
+	
 	// create players
 	player1 = new player(gameScreen.centerX/2, gameScreen.centerY, 1, 'hikari');
 	player2 = new player(3 * gameScreen.centerX/2, gameScreen.centerY, 2, 'cerise');
