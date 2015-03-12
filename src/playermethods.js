@@ -6,7 +6,7 @@ function playerMove() {
 
 	if (this.inputs.dash) {
 		move = Point2D.scale(move, this.stats.dashSpeed);
-		this.dashTimer = 20;
+		this.dashTimer = 30;
 		this.dashDirection = move;
 	}
 	else if (this.dashTimer > 0) {
@@ -119,13 +119,7 @@ function correctPosition() {
 
 function playerDraw(player, context) {
 	// draw player
-	/*
-	context.fillStyle = (player.stats.playerID == 1)? "blue" : "red";
-	context.fillRect(player.drawPos.x, player.drawPos.y, player.width, player.height);
-	context.strokeStyle = "black";
-	context.lineWidth = "1";
-	context.strokeRect(player.drawPos.x, player.drawPos.y, player.width, player.height);
-	*/
+	player.sprite.idleSprite.draw(gameScreen.canvas, player.drawPos.x, player.drawPos.y);
 
 	// draw bullets
 	for (i = 0; i < player.bullets.length; i++) {
@@ -134,7 +128,6 @@ function playerDraw(player, context) {
 			y: player.bullets[i].pos.y,
 			size: player.bullets[i].size,
 			color: (player.stats.playerID == 1)? 'green' : 'purple'
-			// dose kek
 		};
 
 		if (!player.bullets[i].destroyed) {
@@ -159,6 +152,8 @@ function playerUpdate(player, enemy) {
 	if (player.wait > 0)
 		player.wait--;
 	else player.shoot();
+
+	player.sprite.idleSprite.update();
 }
 
 function updateCooldowns() {

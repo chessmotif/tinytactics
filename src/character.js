@@ -6,8 +6,15 @@ function setCharacter(player, charName) {
 			player.shot2 = hikari_shot2;
 			player.shot3 = hikari_shot3;
 			break;
+		case 'cerise':
+			player.shot1 = cerise_shot1;
+			player.shot2 = default_shot;
+			player.shot3 = default_shot;
+			break;
 		default:
 			player.shot1 = default_shot;
+			player.shot2 = default_shot;
+			player.shot3 = default_shot;
 	}
 }
 
@@ -184,6 +191,44 @@ function hikari_shot3_update() {
 	// check if bullet is out of bounds
 	if (drawBounds(this.pos))
 		this.destroyed = true;
+}
+
+function cerise_shot1() {
+	if (this.cooldown.shot1 > 0)
+		return;
+	else {
+		// this.cooldown.id |= 8;
+		//this.cooldown.shot1 = 5;
+	}
+
+	this.rotationFlag = true;
+	this.rotationAccel = 5 * Math.PI / 180;
+
+	if (this.rotationVelocity === undefined)
+		this.rotationVelocity = 15 * Math.PI / 180;
+	else {
+		this.rotationVelocity += ((this.rotationFlag)? 1 : -1) * this.rotationAccel;
+
+		if (this.rotationVelocity >= 100 * Math.PI / 180 && this.rotationFlag) {
+			this.rotationFlag = false;
+		}
+		if (this.rotationVelocity <= -100 * Math.PI / 180 && !this.rotationFlag) {
+			this.rotationFlag = true;
+		}
+	}
+
+
+	for (var i = 0; i < 360; i+=45) {
+		var mainshot = new bullet(defaultSpecs(this));
+		var mainshot2 = new bullet(defaultSpecs(this));
+
+		mainshot.facing = i * Math.PI / 180 + this.facing + this.rotationVelocity;
+		mainshot2.facing = -i * Math.PI / 180 - this.facing - this.rotationVelocity;
+
+		mainshot.size = 2.5;
+		mainshot2.size = 2.5;
+		this.bullets.push(mainshot, mainshot2);
+	}
 }
 
 function default_shot() {
