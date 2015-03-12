@@ -33,12 +33,23 @@ function updateDrawPos() {
 }
 
 function playerShoot() {
-	if (this.inputs.shot1)
+	
+	if (this.inputs.shot1){
+		this.state = 'Attack';
 		this.shot1();
-	if (this.inputs.shot2)
+	}
+	else if (this.inputs.shot2){
+		this.state = 'Attack';
 		this.shot2();
-	if (this.inputs.shot3)
+	}
+	else if (this.inputs.shot3){
+		this.state = 'Attack';
 		this.shot3();
+	}
+	else{
+		this.state = 'Idle';
+
+	}
 }
 
 function updateBullets() {
@@ -149,8 +160,11 @@ function playerUpdate(player, enemy) {
 	player.updateCooldowns();
 	player.updateBullets();
 
-	if (player.wait > 0)
+	if (player.wait > 0) {
+		//Fix this o:
+		this.state = "Idle";
 		player.wait--;
+	}
 	else player.shoot();
 
 	player.sprite.idleSprite.update();
