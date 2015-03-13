@@ -54,6 +54,7 @@ function simpleUpdate() {
 
 	if (hitboxCollisionCheck(this.hitbox, this.enemy.hitbox)) {
 		this.destroyed = true;
+		this.enemy.state = "Hit";
 	}
 
 	// if the bullet is destroyed, stop update
