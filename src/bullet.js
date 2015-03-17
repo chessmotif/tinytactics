@@ -17,6 +17,7 @@ function bullet(specs, type) {
 	this.size = 5;
 	this.speed = 10;
 	this.time = INF_TIME;
+	this.damage = 5;
 
 	this.hitbox = {
 		pos: Point2D.flatAdd(this.pos, -this.size/2),
@@ -52,9 +53,7 @@ function simpleUpdate() {
 		height: this.size
 	};
 
-	if (hitboxCollisionCheck(this.hitbox, this.enemy.hitbox)) {
-		this.destroyed = true;
-	}
+	damageEnemy(this, this.enemy);
 
 	// if the bullet is destroyed, stop update
 	if (this.destroyed)
@@ -73,6 +72,14 @@ function hitboxCollisionCheck(h1, h2) {
 			h1.pos.x <= h2.pos.x + h2.width &&
 			h2.pos.y <= h1.pos.y + h1.height &&
 			h1.pos.y <= h2.pos.y + h2.height;
+}
+
+function damageEnemy(bullet, target) {
+	if (hitboxCollisionCheck(bullet.hitbox, target.hitbox)) {
+		if (target.stats.HP > 0)
+			target.stats.HP -= bullet.damage;
+		bullet.destroyed = true;
+	}
 }
 
 function defaultSpecs(p) {

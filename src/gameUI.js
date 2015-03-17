@@ -8,16 +8,23 @@ var gameUI = {
 	draw: drawUI
 };
 
+function drawBar(fillColor, outlineColor, varCurr, varMax, x, y, width, height, reverse) {
+	gameScreen.canvas.strokeStyle = fillColor;
+	gameScreen.canvas.strokeRect(x,y,width,height);
+
+
+	gameScreen.canvas.fillStyle = outlineColor;
+	if (reverse)
+		gameScreen.canvas.fillRect(x, y, varCurr / varMax * width, height);
+	else
+		gameScreen.canvas.fillRect(x + ((1 - varCurr / varMax) * width), y, (varCurr / varMax) * width, height);
+}
+
+
 function drawUI(){
 	// hp bar
-	gameScreen.canvas.fillStyle = "#ADFF2F";
-	gameScreen.canvas.fillRect(250,10,250,20);
-	gameScreen.canvas.fillRect(250 + 350,10,250,20);
-
-	// hp outline
-	gameScreen.canvas.strokeStyle = "black";
-	gameScreen.canvas.strokeRect(250 + 350,10,250,20);
-	gameScreen.canvas.strokeRect(250,10,250,20);
+	drawBar("black", "#ADFF2F", player1.stats.HP, player1.stats.maxHP, 250, 10, 250, 20, true);
+	drawBar("black", "#ADFF2F", player2.stats.HP, player2.stats.maxHP, 250 + 350, 10, 250, 20, false);
 
 	// omega bar
 	gameScreen.canvas.fillStyle = "#66FFFF";

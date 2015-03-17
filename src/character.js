@@ -77,9 +77,7 @@ function hikari_shot2() {
 				height: this.size
 			};
 
-			if (hitboxCollisionCheck(this.hitbox, this.enemy.hitbox)) {
-				this.destroyed = true;
-			}
+			damageEnemy(this, this.enemy);
 
 			if (this.destroyed)
 				return;
@@ -115,9 +113,7 @@ function hikari_shot2() {
 				height: this.size
 			};
 
-			if (hitboxCollisionCheck(this.hitbox, this.enemy.hitbox)) {
-				this.destroyed = true;
-			}
+			damageEnemy(this, this.enemy);
 
 			if (this.destroyed)
 				return;
@@ -185,6 +181,7 @@ function hikari_shot3_update() {
 	};
 
 	if (hitboxCollisionCheck(this.hitbox, this.enemy.hitbox)) {
+		this.enemy.stats.HP -= this.damage;
 		this.destroyed = true;
 	}
 

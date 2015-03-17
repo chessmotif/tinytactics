@@ -4,7 +4,8 @@ function player(xpos, ypos, no, name) {
 	// variables
 	this.stats = {
 		playerID: no,
-		HP: 10000,
+		maxHP: 1000,
+		HP: 1000,
 		heat: 0,
 		power: 0,
 		moveSpeed: 2,
