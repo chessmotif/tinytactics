@@ -11,20 +11,27 @@ var gameScreen = {
 };
 
 function drawScreen() {
+	var bg = new Image();
+	bg.src = "img/bg2.png";
+
+	
+
 	gameScreen.canvas.fillStyle = "#FFFFFF";
 	gameScreen.canvas.fillRect(0, 0, gameScreen.canvasWidth, gameScreen.height);
-	gameScreen.canvas.fillStyle = "#FFFFFF";
-	gameScreen.canvas.fillRect(gameScreen.offset, 0, gameScreen.width, gameScreen.height);
+
+	gameScreen.canvas.drawImage(bg,gameScreen.offset,0,800,600);
+	//gameScreen.canvas.fillStyle = "#FFFFFF";
+	//gameScreen.canvas.fillRect(gameScreen.offset, 0, gameScreen.width, gameScreen.height);
 	gameScreen.canvas.strokeStyle = "black";
 	gameScreen.canvas.strokeRect(gameScreen.offset, 0, gameScreen.width, gameScreen.height);
 
 	// center point
-	gameScreen.canvas.beginPath();
-	gameScreen.canvas.arc(gameScreen.centerX, gameScreen.centerY, 1, 0, 2*Math.PI);
-	gameScreen.canvas.stroke();
+	//gameScreen.canvas.beginPath();
+	//gameScreen.canvas.arc(gameScreen.centerX, gameScreen.centerY, 1, 0, 2*Math.PI);
+	//gameScreen.canvas.stroke();
 	
 	// circle arena
-	gameScreen.canvas.beginPath();
-	gameScreen.canvas.arc(gameScreen.centerX, gameScreen.centerY, gameScreen.radius, 0, 2*Math.PI);
-	gameScreen.canvas.stroke();
+	//gameScreen.canvas.beginPath();
+	//gameScreen.canvas.arc(gameScreen.centerX, gameScreen.centerY, gameScreen.radius, 0, 2*Math.PI);
+	//gameScreen.canvas.stroke();
 }
