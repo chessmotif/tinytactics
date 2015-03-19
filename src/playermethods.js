@@ -4,12 +4,17 @@ function playerMove() {
 		y: this.inputs.vertical
 	};
 
-	if (this.inputs.dash) {
+	if (this.inputs.dash && this.dashTimer <= 10) {
 		move = Point2D.scale(move, this.stats.dashSpeed);
 		this.dashTimer = 30;
 		this.dashDirection = move;
+
+		this.stats.heat += 15;
+		if (this.stats.heat > 300)
+			this.stats.heat = 300;
 	}
-	else if (this.dashTimer > 0) {
+	
+	if (this.dashTimer > 0) {
 		move = Point2D.scale(move, this.stats.moveSpeed);
 		var dash = Point2D.scale(this.dashDirection, this.stats.dashSpeed);
 		move = Point2D.plus(move, dash);
@@ -176,4 +181,7 @@ function updateCooldowns() {
 	this.cooldown.shot1--;
 	this.cooldown.shot2--;
 	this.cooldown.shot3--;
+
+	if (this.stats.heat > 0 && this.dashTimer == 0)
+		this.stats.heat--;
 }

@@ -9,7 +9,7 @@ function player(xpos, ypos, no, name) {
 		heat: 0,
 		power: 0,
 		moveSpeed: 2,
-		dashSpeed: 1.5
+		dashSpeed: 1
 	};
 
 	this.pos = {

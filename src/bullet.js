@@ -75,9 +75,12 @@ function hitboxCollisionCheck(h1, h2) {
 }
 
 function damageEnemy(bullet, target) {
+	if (target.dashTimer > 0 && target.stats.heat <= 150)
+		return;
+
 	if (hitboxCollisionCheck(bullet.hitbox, target.hitbox)) {
 		if (target.stats.HP > 0)
-			target.stats.HP -= bullet.damage;
+			target.stats.HP -= bullet.damage * ((target.stats.heat > 100)? target.stats.heat / 100 : 1);
 		bullet.destroyed = true;
 	}
 }

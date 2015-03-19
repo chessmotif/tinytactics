@@ -180,10 +180,7 @@ function hikari_shot3_update() {
 		height: this.size
 	};
 
-	if (hitboxCollisionCheck(this.hitbox, this.enemy.hitbox)) {
-		this.enemy.stats.HP -= this.damage;
-		this.destroyed = true;
-	}
+	damageEnemy(this, this.enemy);
 
 	// check if bullet is out of bounds
 	if (drawBounds(this.pos))
