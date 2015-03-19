@@ -1,4 +1,5 @@
 var gameScreen = {
+	CNAVAS: document.getElementById("cv"),
 	canvas: document.getElementById("cv").getContext("2d"),
 	canvasWidth: document.getElementById("cv").width,
 	offset: (document.getElementById("cv").width - 800) / 2,
@@ -9,6 +10,21 @@ var gameScreen = {
 	radius: document.getElementById("cv").height / 2 - 10,
 	draw: drawScreen
 };
+
+var bgmain = new Image();
+	bgmain.src = "img/mainMenu.png";
+var bgchar = new Image();
+	bgchar.src = "img/charSel.png";
+var sbtn = new Image();
+	sbtn.src = "img/sbtn.png";	
+var rbtn = new Image();
+	rbtn.src = "img/rbtn.png";
+var lbtn = new Image();
+	lbtn.src = "img/lbtn.png";
+var bbtn = new Image();
+	bbtn.src = "img/bbtn.png";
+var cbtn = new Image();
+	cbtn.src = "img/cbtn.png";
 
 function drawScreen() {
 	var bg = new Image();

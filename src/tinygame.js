@@ -71,4 +71,4 @@ function drawBounds(point) {
 }
 
 // EXECUTED CODE
-main();
+//main();
