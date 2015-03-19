@@ -128,6 +128,8 @@ function correctPosition() {
 // non-method functions
 
 
+
+
 function playerDraw(player, context) {
 	// draw player
 	player.sprite.idleSprite.draw(gameScreen.canvas, player.drawPos.x, player.drawPos.y);
@@ -138,7 +140,7 @@ function playerDraw(player, context) {
 			x: player.bullets[i].pos.x,
 			y: player.bullets[i].pos.y,
 			size: player.bullets[i].size,
-			color: (player.stats.playerID == 1)? '#fffd5f' : '#f69aea'
+			color: (player.stats.playerID == 1)? gamePrefs.bullet1 : gamePrefs.bullet2
 		};
 
 		if (!player.bullets[i].destroyed) {

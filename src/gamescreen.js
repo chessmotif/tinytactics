@@ -11,6 +11,14 @@ var gameScreen = {
 	draw: drawScreen
 };
 
+var gamePrefs = {
+	player1: "hikari",
+	player2: "cerise",
+	bullet1: "",
+	bullet2: "",
+	arena: "bg1"
+};
+
 var bgmain = new Image();
 	bgmain.src = "img/mainMenu.png";
 var bgchar = new Image();
@@ -26,9 +34,10 @@ var bbtn = new Image();
 var cbtn = new Image();
 	cbtn.src = "img/cbtn.png";
 
+
 function drawScreen() {
 	var bg = new Image();
-	bg.src = "img/bg2.png";
+	bg.src = "img/" + gamePrefs.arena + ".png";
 
 	
 

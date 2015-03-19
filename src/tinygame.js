@@ -28,8 +28,8 @@ function initialize() {
 	
 	
 	// create players
-	player1 = new player(gameScreen.centerX/2, gameScreen.centerY, 1, 'rynn');
-	player2 = new player(3 * gameScreen.centerX/2, gameScreen.centerY, 2, 'cerise');
+	player1 = new player(gameScreen.centerX/2, gameScreen.centerY, 1, gamePrefs.player1);
+	player2 = new player(3 * gameScreen.centerX/2, gameScreen.centerY, 2, gamePrefs.player2);
 }
 
 function paint() {

@@ -8,8 +8,8 @@ function drawcharSel(){
 
 var options = new Array();
 
-function addOption(y,w,h,Img){
-	var op = new button(y,w,h,Img);
+function addOption(x,y,w,h,Img){
+	var op = new button(x,y,w,h,Img);
 	
 	options.push(op);
 }
@@ -37,8 +37,8 @@ function drawMenu(undraw){
 	}
 }
 
-function button(y,w,h,bgImg){
-	this.x=gameScreen.offset;
+function button(x,y,w,h,bgImg){
+	this.x=x;
 	this.y=y;
 	this.w=w;
 	this.h=h;
@@ -60,8 +60,8 @@ function button(y,w,h,bgImg){
 function initMain(){
 	drawBG();
 	
-	addOption(250,309,30,"sbtn");
-	addOption(300, 217,34,"cbtn");
+	addOption(gameScreen.offset,250,309,30,"sbtn");
+	addOption(gameScreen.offset,300, 217,34,"cbtn");
 	drawMenu();
 	gameScreen.CNAVAS.addEventListener('mousemove', hoverEvent, false);
 	gameScreen.CNAVAS.addEventListener('mousedown', clickEvent, false);
@@ -74,6 +74,7 @@ function clickEvent(evt) {
 			removeListeners();
 		}
 		else if(inCoordinates(options[1],mousePos)){
+			console.log("Derp");
 			removeListeners();
 		}
 }
@@ -101,8 +102,5 @@ function removeListeners(){
 	gameScreen.CNAVAS.removeEventListener('mousedown', clickEvent);
 }
 
-function charSelection(){
-	drawcharSel();
-	main();
-}
-//
+
+
