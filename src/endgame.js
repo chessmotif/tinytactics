@@ -1,9 +1,3 @@
-var characterlist = ["hikari", "cerise", "rynn"];
-var arenalist = ["sky", "city"];
-var bulletlist = ['#fffd5f','#f000ff','#b4ff00'];
-var player1Curr=0;
-var player2Curr=1;
-var arenaCurr=0;
 
 function removeListenersChar(){
 	gameScreen.CNAVAS.removeEventListener('mousemove', hoverEventChar);

@@ -18,6 +18,13 @@ var UIColors = {
 	heatText: "#DD0000"
 };
 
+var hikaribubble = new Image();
+hikaribubble.src = "img/port-hikari.png";
+var cerisebubble = new Image();
+cerisebubble.src = "img/port-cerise.png";
+var rynnbubble = new Image();
+rynnbubble.src = "img/port-rynn.png";
+
 function drawHPBar(varCurr, varMax, x, y, width, height, reverse) {
 	gameScreen.canvas.strokeStyle = UIColors.outline;
 	gameScreen.canvas.strokeRect(x, y, width, height);
@@ -42,6 +49,31 @@ function drawTimeText(text, font, x, y) {
 	gameScreen.canvas.fillText(text, x, y);
 }
 
+function drawBubble(){
+	switch(player1.name){
+		case "hikari":
+			gameScreen.canvas.drawImage(hikaribubble,180,0,80,80);
+		break;
+		case "rynn":
+			gameScreen.canvas.drawImage(rynnbubble,180,0,80,80);
+		break;
+		case "cerise":
+			gameScreen.canvas.drawImage(cerisebubble,180,0,80,80);
+		break;
+	}
+	switch(player2.name){
+		case "hikari":
+			gameScreen.canvas.drawImage(hikaribubble,830,0,80,80);
+		break;
+		case "rynn":
+			gameScreen.canvas.drawImage(rynnbubble,830,0,80,80);
+		break;
+		case "cerise":
+			gameScreen.canvas.drawImage(cerisebubble,830,0,80,80);
+		break;
+	}
+}
+
 function drawUI(){
 	// hp bar
 	drawHPBar(player1.stats.HP, player1.stats.maxHP, 250, 10, 250, 20, false);
@@ -57,10 +89,10 @@ function drawUI(){
 	gameScreen.canvas.strokeRect(200,30,200,15);
 	gameScreen.canvas.strokeRect(200 + 500,30,200,15);
 
-	//character portraits
-	gameScreen.canvas.fillStyle = "#FF4500";
-	gameScreen.canvas.fillRect(150 + 50,10,50,50);
-	gameScreen.canvas.fillRect(150 + 710 -10,10,50,50);
+	
+
+	//character bubble
+	drawBubble();
 
 	// time
 	drawTimeText("60", "40px Lucida Console", gameScreen.centerX-25, 40);
