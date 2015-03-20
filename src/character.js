@@ -8,8 +8,8 @@ function setCharacter(player, charName) {
 			break;
 		case 'cerise':
 			player.shot1 = cerise_shot1;
-			player.shot2 = cerise_shot2_omega;
-			player.shot3 = default_shot;
+			player.shot2 = cerise_shot2;
+			player.shot3 = cerise_shot3;
 			break;
 		default:
 			player.shot1 = default_shot;
@@ -458,7 +458,38 @@ function cerise_shot2_omega() {
 }
 
 function cerise_shot3() {
-	
+	if (this.cooldown.shot3 > 0)
+		return;
+	else
+		this.cooldown.shot3 = 80;
+
+	if (this.dashDirection === undefined)
+		return;
+
+	if (!this.inputs.dash)
+		return;
+
+	var startPos = this.pos;
+	var direction = Point2D.scale(this.dashDirection, 75);
+	this.pos = Point2D.plus(this.pos, direction);
+
+	for (var i = 1; i <= 5; i++) {
+		var specs = defaultSpecs(this);
+
+		var pos = Point2D.scale(this.dashDirection, i * 20);
+		pos = Point2D.plus(startPos, pos);
+
+		specs.x = pos.x;
+		specs.y = pos.y;
+
+		var shot = new bullet(specs);
+		shot.facing = Math.atan2(this.enemy.pos.y - shot.pos.y, this.enemy.pos.x - shot.pos.x);
+		shot.delay = i * 5;
+		shot.speed = 5;
+		shot.size = 3;
+
+		this.bullets.push(shot);
+	}
 }
 
 function test_shot1() {
