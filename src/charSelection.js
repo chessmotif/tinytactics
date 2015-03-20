@@ -50,6 +50,8 @@ function nextOption(arr,label){
 	if((arr.length-1) > label){
 		num++;
 	}
+	else
+		num = 0;
 	return num;
 }
 
@@ -58,6 +60,8 @@ function prevOption(label){
 	if(num > 0){
 		num--;
 	}
+	else 
+		num = 2;
 	return num;
 }
 
