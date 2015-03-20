@@ -8,7 +8,7 @@ function setCharacter(player, charName) {
 			break;
 		case 'cerise':
 			player.shot1 = cerise_shot1;
-			player.shot2 = default_shot;
+			player.shot2 = cerise_shot2_omega;
 			player.shot3 = default_shot;
 			break;
 		default:
@@ -57,11 +57,17 @@ function hikari_shot2() {
 
 	for (var i = 0; i < 5; i++) {
 		var sideshot1 = new bullet(defaultSpecs(this));
+		sideshot1.delay = 4 * i;
 		sideshot1.speed = 10 - 2.5*Math.random();
 		sideshot1.size = 2.5;
 		sideshot1.facing += 2 * Math.PI / 3;
 
 		sideshot1.update = function() {
+			if (this.delay > 0) {
+				this.delay--;
+				return;
+			}
+
 			if (this.facing - mainshot.facing > (- 30 + 15 * Math.random()) * Math.PI / 180) {
 				if (this.rotationVelocity === undefined)
 					this.rotationVelocity = 5 * Math.PI / 180;
@@ -96,8 +102,14 @@ function hikari_shot2() {
 		sideshot2.speed = 10 - 2.5*Math.random();
 		sideshot2.size = 2.5;
 		sideshot2.facing -= 2 * Math.PI / 3;
+		sideshot2.delay = 4 * i;
 
 		sideshot2.update = function() {
+			if (this.delay > 0) {
+				this.delay--;
+				return;
+			}
+
 			if (this.facing - mainshot.facing < (30 - 15 * Math.random()) * Math.PI / 180) {
 				if (this.rotationVelocity === undefined)
 					this.rotationVelocity = 5 * Math.PI / 180;
@@ -241,6 +253,212 @@ function cerise_shot1() {
 
 		this.bullets.push(b);
 	}
+}
+
+function cerise_shot2() {
+	if (this.cooldown.shot2 > 0)
+		return;
+	else
+		this.cooldown.shot2 = 20;
+
+	for (var i = 0; i < 5; i++) {
+		var specs = defaultSpecs(this);
+
+		var pos = {
+			x: specs.x + Math.cos(i * Math.PI / 8) * 20,
+			y: specs.y - Math.sin(i * Math.PI / 8) * 20 - 40
+		};
+
+		pos = Point2D.rotate(this.pos, pos, this.facing);
+		specs.x = pos.x;
+		specs.y = pos.y;
+
+		var shot = new bullet(specs);
+
+		shot.facing += 2 * i * Math.PI / 180;
+		shot.speed = 5;
+		shot.size = 3;
+		shot.delay = 2 * i;
+
+		shot.update = function() {
+			if (this.delay > 0) {
+				this.delay--;
+				return;
+			}
+
+			this.facing += 0.5 * Math.PI / 180;
+
+			this.hitbox = {
+				pos: Point2D.flatAdd(this.pos, -this.size/2),
+				width: this.size,
+				height: this.size
+			};
+
+			damageEnemy(this, this.enemy);
+
+			if (this.destroyed)
+				return;
+
+			this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
+
+			if (drawBounds(this.pos))
+				this.destroyed = true;
+		};
+
+		specs = defaultSpecs(this);
+
+		var pos = {
+			x: specs.x + Math.cos(i * Math.PI / 8) * 20,
+			y: specs.y + Math.sin(i * Math.PI / 8) * 20 + 40
+		};
+
+		pos = Point2D.rotate(this.pos, pos, this.facing);
+		specs.x = pos.x;
+		specs.y = pos.y;
+
+		var shot2 = new bullet(specs);
+
+		shot2.facing -= 2 * i * Math.PI / 180;
+		shot2.speed = 5;
+		shot2.size = 3;
+		shot2.delay = 2 * i;
+
+		shot2.update = function() {
+			if (this.delay > 0) {
+				this.delay--;
+				return;
+			}
+
+			this.facing -= 0.5 * Math.PI / 180;
+
+			this.hitbox = {
+				pos: Point2D.flatAdd(this.pos, -this.size/2),
+				width: this.size,
+				height: this.size
+			};
+
+			damageEnemy(this, this.enemy);
+
+			if (this.destroyed)
+				return;
+
+			this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
+
+			if (drawBounds(this.pos))
+				this.destroyed = true;
+		};
+
+		this.bullets.push(shot, shot2);
+	}
+}
+
+function cerise_shot2_omega() {
+	if (this.cooldown.shot2 > 0)
+		return;
+	else
+		this.cooldown.shot2 = 10;
+
+	for (var t = 0; t < 360; t += 60) {
+		this.rotationVelocity = 2 * Math.PI / 180;
+		if (this.angle === undefined)
+			this.angle = 0;
+		else
+			this.angle += this.rotationVelocity;
+		for (var i = 0; i < 5; i++) {
+			var specs = defaultSpecs(this);
+
+			var pos = {
+				x: specs.x + Math.cos(i * Math.PI / 8) * 20,
+				y: specs.y - Math.sin(i * Math.PI / 8) * 20 - 40
+			};
+
+			pos = Point2D.rotate(this.pos, pos, this.facing + t * Math.PI / 180 + this.angle);
+			specs.x = pos.x;
+			specs.y = pos.y;
+
+			var shot = new bullet(specs);
+
+			shot.facing += 2 * i * Math.PI / 180 + t * Math.PI / 180 + this.angle;
+			shot.speed = 5;
+			shot.size = 3;
+			shot.delay = 2 * i;
+
+			shot.update = function() {
+				if (this.delay > 0) {
+					this.delay--;
+					return;
+				}
+
+				this.facing += 0.5 * Math.PI / 180;
+
+				this.hitbox = {
+					pos: Point2D.flatAdd(this.pos, -this.size/2),
+					width: this.size,
+					height: this.size
+				};
+
+				damageEnemy(this, this.enemy);
+
+				if (this.destroyed)
+					return;
+
+				this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
+
+				if (drawBounds(this.pos))
+					this.destroyed = true;
+			};
+
+			specs = defaultSpecs(this);
+
+			var pos = {
+				x: specs.x + Math.cos(i * Math.PI / 8) * 20,
+				y: specs.y + Math.sin(i * Math.PI / 8) * 20 + 40
+			};
+
+			pos = Point2D.rotate(this.pos, pos, this.facing + t * Math.PI / 180 + this.angle);
+			specs.x = pos.x;
+			specs.y = pos.y;
+
+			var shot2 = new bullet(specs);
+
+			shot2.facing -= 2 * i * Math.PI / 180 - t * Math.PI / 180 - this.angle;
+			shot2.speed = 5;
+			shot2.size = 3;
+			shot2.delay = 2 * i;
+
+			shot2.update = function() {
+				if (this.delay > 0) {
+					this.delay--;
+					return;
+				}
+
+				this.facing -= 0.5 * Math.PI / 180;
+
+				this.hitbox = {
+					pos: Point2D.flatAdd(this.pos, -this.size/2),
+					width: this.size,
+					height: this.size
+				};
+
+				damageEnemy(this, this.enemy);
+
+				if (this.destroyed)
+					return;
+
+				this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
+
+				if (drawBounds(this.pos))
+					this.destroyed = true;
+			};
+
+			this.bullets.push(shot, shot2);
+		}
+	}
+
+}
+
+function cerise_shot3() {
+	
 }
 
 function test_shot1() {

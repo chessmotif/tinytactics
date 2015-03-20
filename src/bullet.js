@@ -10,6 +10,7 @@ function bullet(specs, type) {
 
 	this.facing = specs.facing;
 	this.enemy = specs.enemy;
+	this.delay = 0;
 
 	this.destroyed = false;
 
@@ -31,7 +32,7 @@ function bullet(specs, type) {
 }
 
 function drawBullet(specs) {
-	if (drawBounds(this.pos))
+	if (drawBounds(this.pos) || this.delay > 0)
 		return;
 
 	gameScreen.canvas.fillStyle = specs.color;
@@ -41,6 +42,11 @@ function drawBullet(specs) {
 }
 
 function simpleUpdate() {
+	if (this.delay > 0) {
+		this.delay--;
+		return;
+	}
+
 	// time update
 	if (this.time >= 0)
 		this.time--;
