@@ -1,6 +1,7 @@
 // INITIALIZED VARIABLES
 
 var player1, player2;
+var winner;
 
 // UTILITY DECLARATIONS
 
@@ -15,8 +16,32 @@ function main() {
 
 	initialize();
 
+/*
 	if (typeof game_loop != "undefined") clearInterval(game_loop);
 	game_loop = setInterval(paint, 10);
+	if(player1.stats.HP <= 0)
+*/
+	loop();
+
+
+}
+
+function loop(){
+	paint();
+
+	if(player1.stats.HP <= 1 ){
+		winner = player2;
+		endGame();
+		
+	}
+	else if(player2.stats.HP <= 1 ){
+		winner = player1;
+		endGame();
+	}
+	else
+		setTimeout(loop,10);
+		
+	
 }
 
 function initialize() {
@@ -26,7 +51,7 @@ function initialize() {
 	// initialize the frame
 	gameUI.frame.src = "img/frame.png";
 	
-	
+	winner = null;
 	// create players
 	player1 = new player(gameScreen.centerX/2, gameScreen.centerY, 1, gamePrefs.player1);
 	player2 = new player(3 * gameScreen.centerX/2, gameScreen.centerY, 2, gamePrefs.player2);

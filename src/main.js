@@ -1,5 +1,10 @@
+var controltoggle = false;
+var controlImg = new Image();
+controlImg.src = "img/controls.png";
+
 function drawBG(){
 	gameScreen.canvas.drawImage(bgmain, gameScreen.offset, 0, 800, 600);
+	showControls();
 }
 
 function drawcharSel(){
@@ -8,8 +13,8 @@ function drawcharSel(){
 
 var options = new Array();
 
-function addOption(x,y,w,h,Img){
-	var op = new button(x,y,w,h,Img);
+function addOption(x,y,w,h,Img,varName){
+	var op = new button(x,y,w,h,Img,varName);
 	
 	options.push(op);
 }
@@ -37,13 +42,12 @@ function drawMenu(undraw){
 	}
 }
 
-function button(x,y,w,h,bgImg){
+function button(x,y,w,h,bgImg,varName){
 	this.x=x;
 	this.y=y;
 	this.w=w;
 	this.h=h;
-	this.bgImg = new Image();
-	this.bgImg.src = "img/" + bgImg + ".png";
+	this.bgImg = varName;
 	this.bgImgHover = new Image();
 	this.bgImgHover.src = "img/" + bgImg + "-h.png";
 
@@ -56,12 +60,22 @@ function button(x,y,w,h,bgImg){
 	}
 }
 
+
+
+function showControls(){
+	if(controltoggle){
+		gameScreen.canvas.drawImage(controlImg, gameScreen.offset + 380, 20, 420, 600);
+	}
+}
+
 // INIT THINGS FOR MAIN
 function initMain(){
+	controltoggle = false;
+	options = [];
 	drawBG();
 	
-	addOption(gameScreen.offset,250,309,30,"sbtn");
-	addOption(gameScreen.offset,300, 217,34,"cbtn");
+	addOption(gameScreen.offset,250,309,30,"sbtn", sbtn);
+	addOption(gameScreen.offset,300, 217,34,"cbtn", cbtn);
 	drawMenu();
 	gameScreen.CNAVAS.addEventListener('mousemove', hoverEvent, false);
 	gameScreen.CNAVAS.addEventListener('mousedown', clickEvent, false);
@@ -74,8 +88,10 @@ function clickEvent(evt) {
 			removeListeners();
 		}
 		else if(inCoordinates(options[1],mousePos)){
-			console.log("Derp");
-			removeListeners();
+			if(controltoggle)
+				controltoggle = false;
+			else
+				controltoggle = true;
 		}
 }
 

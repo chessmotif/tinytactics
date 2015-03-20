@@ -16,28 +16,21 @@ var gamePrefs = {
 	player2: "cerise",
 	bullet1: "",
 	bullet2: "",
-	arena: "bg1"
+	arena: "sky"
 };
 
-var bgmain = new Image();
-	bgmain.src = "img/mainMenu.png";
-var bgchar = new Image();
-	bgchar.src = "img/charSel.png";
-var sbtn = new Image();
-	sbtn.src = "img/sbtn.png";	
-var rbtn = new Image();
-	rbtn.src = "img/rbtn.png";
-var lbtn = new Image();
-	lbtn.src = "img/lbtn.png";
-var bbtn = new Image();
-	bbtn.src = "img/bbtn.png";
-var cbtn = new Image();
-	cbtn.src = "img/cbtn.png";
+
 
 
 function drawScreen() {
-	var bg = new Image();
-	bg.src = "img/" + gamePrefs.arena + ".png";
+	var bg;
+
+	switch(gamePrefs.arena){
+		case "sky": bg = bgSky;
+					break;
+		case "city": bg = bgCity;
+					break;
+	}
 
 	
 

@@ -34,7 +34,7 @@ function clickEventChar(evt) {
 			arenaCurr = prevOption(arenaCurr);
 			
 		}
-		else if(inCoordinates(options[7],mousePos)){
+		else if(inCoordinates(options[6],mousePos)){
 			gamePrefs.player1 = characterlist[player1Curr];
 			gamePrefs.player2 = characterlist[player2Curr];
 			gamePrefs.bullet1 = bulletlist[player1Curr];
@@ -46,7 +46,6 @@ function clickEventChar(evt) {
 }
 
 function nextOption(arr,label){
-	console.log(label + " > " + (arr.length-1));
 	var num = label;
 	if((arr.length-1) > label){
 		num++;
@@ -55,7 +54,6 @@ function nextOption(arr,label){
 }
 
 function prevOption(label){
-	console.log(label + " > 0");
 	var num = label;
 	if(num > 0){
 		num--;
@@ -86,18 +84,44 @@ function hoverEventChar(evt) {
 
 
 function drawChar(loli1,loli2,are){
-	var image = new Image();
-	image.src = "img/sel-" + loli1 + ".png";
-	var image2 = new Image();
-	image2.src = "img/sel-" + loli2 + ".png";
 
-	var chib1 = new Image();
-	chib1.src = "img/chib-" + loli1 + ".png";
-	var chib2 = new Image();
-	chib2.src = "img/chib-" + loli2 + ".png";
 
-	var ar = new Image();
-	ar.src = "img/sel-" + are + ".png";
+	var image;
+	var chib1;
+	switch(loli1){
+		case "hikari": image = selHikari;
+						chib1 = chibHikari;
+						break;
+		case "cerise": image = selCerise;
+						chib1 = chibCerise;
+						break;
+		case "rynn": image = selRynn;
+						chib1 = chibRynn;
+						break;
+	}
+
+	var image2;
+	var chib2;
+
+	switch(loli2){
+		case "hikari": image2 = selHikari;
+						chib2 = chibHikari;
+						break;
+		case "cerise": image2 = selCerise;
+						chib2 = chibCerise;
+						break;
+		case "rynn": image2 = selRynn;
+						chib2 = chibRynn;
+						break;
+	}
+
+	var ar;
+	switch(are){
+		case "sky": ar = arenaSky;
+					break;
+		case "city": ar = arenaCity;
+					break;
+	}
 
 	gameScreen.canvas.drawImage(image, 260, 170, 100, 30);
 	gameScreen.canvas.drawImage(image2, 260, 300, 100, 30);
@@ -111,14 +135,13 @@ function drawChar(loli1,loli2,are){
 function charSelection(){
 	drawcharSel();
 	options = [];
-	addOption(200,170,36,44,"lbtn");
-	addOption(400,170,36,44,"rbtn");
-	addOption(200,300,36,44,"lbtn");
-	addOption(400,300,36,44,"rbtn");
-	addOption(200,400,36,44,"lbtn");
-	addOption(400,400,36,44,"rbtn");
-	addOption(400,400,36,44,"rbtn");
-	addOption(716,468,234,49, "bbtn");
+	addOption(200,170,36,44,"lbtn",lbtn);
+	addOption(400,170,36,44,"rbtn",rbtn);
+	addOption(200,300,36,44,"lbtn",lbtn);
+	addOption(400,300,36,44,"rbtn",rbtn);
+	addOption(200,400,36,44,"lbtn",lbtn);
+	addOption(400,400,36,44,"rbtn",rbtn);
+	addOption(716,468,234,49, "bbtn", bbtn);
 	drawMenu();
 	drawChar(characterlist[player1Curr],characterlist[player2Curr],arenalist[arenaCurr]);
 
