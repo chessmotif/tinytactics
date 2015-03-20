@@ -70,6 +70,7 @@ function player(xpos, ypos, no, name) {
 	setCharacter(this, name);
 
 	// add this in, yana
+	
 	this.name = name;
 	this.sprite = new spriteSheet(this);
 }

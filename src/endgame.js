@@ -1,9 +1,3 @@
-var characterlist = ["hikari", "cerise", "rynn"];
-var arenalist = ["sky", "city"];
-var bulletlist = ['#fffd5f','#f000ff','#b4ff00'];
-var player1Curr=0;
-var player2Curr=1;
-var arenaCurr=0;
 
 function removeListenersChar(){
 	gameScreen.CNAVAS.removeEventListener('mousemove', hoverEventChar);
@@ -46,24 +40,20 @@ function clickEventChar(evt) {
 }
 
 function nextOption(arr,label){
-	//console.log(label + " > " + (arr.length-1));
+	console.log(label + " > " + (arr.length-1));
 	var num = label;
 	if((arr.length-1) > label){
 		num++;
 	}
-	else
-		num = 0;
 	return num;
 }
 
 function prevOption(label){
-	//console.log(label + " > 0");
+	console.log(label + " > 0");
 	var num = label;
 	if(num > 0){
 		num--;
 	}
-	else 
-		num = 2;
 	return num;
 }
 
