@@ -188,6 +188,62 @@ function hikari_shot3_update() {
 }
 
 function cerise_shot1() {
+	if (this.cooldown.shot1 > 0) {
+		return;
+	}
+	else
+		this.cooldown.shot1 = 20;
+
+	var mainshot = new bullet(defaultSpecs(this));
+
+	// main bullet code
+	mainshot.speed = 3.5;
+	mainshot.size = 5;
+
+	this.bullets.push(mainshot);
+
+	for (var i = 1; i <= 3; i++) {
+		var specs = defaultSpecs(this);
+
+		var rotated = { 
+			x: specs.x + 12 * Math.pow(1.6, i) - 30,
+			y: specs.y + 4 * i - 0.5
+		};
+
+		rotated = Point2D.rotate(mainshot.pos, rotated, this.facing + Math.PI);
+
+		specs.x = rotated.x;
+		specs.y = rotated.y;
+
+		var b = new bullet(specs);
+
+		b.speed = 4.2;
+		b.size = 3;
+
+		this.bullets.push(b);
+
+		var specs2 = defaultSpecs(this);
+
+		var rotated2 = { 
+			x: specs2.x + 12 * Math.pow(1.6, i) - 30,
+			y: specs2.y - 4 * i - 0.5
+		};
+
+		rotated2 = Point2D.rotate(mainshot.pos, rotated2, this.facing + Math.PI);
+
+		specs2.x = rotated2.x;
+		specs2.y = rotated2.y;
+
+		var b = new bullet(specs2);
+
+		b.speed = 4.2;
+		b.size = 3;
+
+		this.bullets.push(b);
+	}
+}
+
+function test_shot1() {
 	if (this.cooldown.shot1 > 0)
 		return;
 	else {

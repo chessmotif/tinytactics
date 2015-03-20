@@ -9,7 +9,7 @@ function playerMove() {
 		this.dashTimer = 30;
 		this.dashDirection = move;
 
-		this.stats.heat += 15;
+		this.stats.heat += 10;
 		if (this.stats.heat > 300)
 			this.stats.heat = 300;
 	}
