@@ -29,12 +29,12 @@ function main() {
 function loop(){
 	paint();
 
-	if(player1.stats.HP <= 1 ){
+	if(player1.stats.HP <= 0 ){
 		winner = player2;
 		endGame();
 		
 	}
-	else if(player2.stats.HP <= 1 ){
+	else if(player2.stats.HP <= 0 ){
 		winner = player1;
 		endGame();
 	}
