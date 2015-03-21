@@ -214,7 +214,7 @@ function cerise_shot1() {
 	var mainshot = new bullet(defaultSpecs(this));
 
 	// main bullet code
-	mainshot.speed = 3.5;
+	mainshot.speed = 7;
 	mainshot.size = 5;
 
 	this.bullets.push(mainshot);
@@ -234,7 +234,7 @@ function cerise_shot1() {
 
 		var b = new bullet(specs);
 
-		b.speed = 4.2;
+		b.speed = 7.5;
 		b.size = 3;
 
 		this.bullets.push(b);
@@ -253,7 +253,7 @@ function cerise_shot1() {
 
 		var b = new bullet(specs2);
 
-		b.speed = 4.2;
+		b.speed = 7.5;
 		b.size = 3;
 
 		this.bullets.push(b);
@@ -466,7 +466,7 @@ function cerise_shot3() {
 	if (this.cooldown.shot3 > 0)
 		return;
 	else
-		this.cooldown.shot3 = 80;
+		this.cooldown.shot3 = 60;
 
 	if (this.dashDirection === undefined)
 		return;
@@ -517,7 +517,12 @@ function rynn_shot1() {
 			return;
 		}
 
-		this.facing -= 0.5 * Math.PI / 180;
+		if (this.speed > 2)
+			this.speed -= .1;
+		else {
+			this.speed = 0;
+			this.destroyed = true;
+		}
 
 		this.hitbox = {
 			pos: Point2D.flatAdd(this.pos, -this.size/2),
@@ -535,6 +540,27 @@ function rynn_shot1() {
 		if (drawBounds(this.pos))
 			this.destroyed = true;
 	}
+
+	shot.onDestroy = function() {
+		if (this.speed != 0)
+			return;
+
+		for (var delay = 0; delay < 10; delay++) {
+			for (var i = 0; i < 360; i += 60) {
+				var shot = new bullet(defaultSpecs(this));
+
+				shot.speed = 5;
+				shot.facing += i * Math.PI / 180 + delay * 10 * Math.PI / 180;
+
+				shot.size = 3;
+
+				shot.delay = delay * 2;
+				shot.time = 25;
+
+				this.parent.bullets.push(shot);
+			}
+		}
+	};
 
 	this.bullets.push(shot);
 
