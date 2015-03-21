@@ -11,6 +11,11 @@ function setCharacter(player, charName) {
 			player.shot2 = cerise_shot2;
 			player.shot3 = cerise_shot3;
 			break;
+		case 'rynn':
+			player.shot1 = rynn_shot1;
+			player.shot2 = cerise_shot2_omega;
+			player.shot3 = test_shot3;
+			break;
 		default:
 			player.shot1 = default_shot;
 			player.shot2 = default_shot;
@@ -492,8 +497,51 @@ function cerise_shot3() {
 	}
 }
 
-function test_shot1() {
-	if (this.cooldown.shot1 > 0)
+
+function rynn_shot1() {
+	if (this.cooldown.shot1 > 0) {
+		return;
+	}
+	else
+		this.cooldown.shot1 = 20;
+
+	var shot = new bullet(defaultSpecs(this));
+
+	// main bullet code
+	shot.speed = 7.5;
+	shot.size = 5;
+
+	shot.update = function() {
+		if (this.delay > 0) {
+			this.delay--;
+			return;
+		}
+
+		this.facing -= 0.5 * Math.PI / 180;
+
+		this.hitbox = {
+			pos: Point2D.flatAdd(this.pos, -this.size/2),
+			width: this.size,
+			height: this.size
+		};
+
+		damageEnemy(this, this.enemy);
+
+		if (this.destroyed)
+			return;
+
+		this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
+
+		if (drawBounds(this.pos))
+			this.destroyed = true;
+	}
+
+	this.bullets.push(shot);
+
+}
+
+function test_shot3() {
+	if (this.cooldown.shot3 > 0)
 		return;
 	else {
 		// this.cooldown.id |= 8;
