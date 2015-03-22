@@ -13,7 +13,7 @@ function setCharacter(player, charName) {
 			break;
 		case 'rynn':
 			player.shot1 = rynn_shot1;
-			player.shot2 = cerise_shot2_omega;
+			player.shot2 = rynn_shot2;
 			player.shot3 = test_shot3;
 			break;
 		default:
@@ -561,6 +561,64 @@ function rynn_shot1() {
 			}
 		}
 	};
+
+	this.bullets.push(shot);
+
+}
+
+function rynn_shot2() {
+	if (this.cooldown.shot2 > 0) {
+		return;
+	}
+	else
+		this.cooldown.shot2 = 20;
+
+	var shot = new bullet(defaultSpecs(this));
+
+	// main bullet code
+	shot.speed = 7.5;
+	shot.size = 5;
+
+	shot.theta = 0;
+	shot.rotationVelocity = 10 * Math.PI / 180;
+
+	shot.update = function() {
+		if (this.delay > 0) {
+			this.delay--;
+			return;
+		}
+
+		this.theta += this.rotationVelocity;
+
+		for (var i = 0; i < 360; i += 120) {
+			var subshot = new bullet(defaultSpecs(this));
+
+			subshot.speed = 3;
+			subshot.facing += i * Math.PI / 180 + this.theta;
+
+			subshot.size = 3;
+
+			subshot.time = 10;
+
+			this.parent.bullets.push(subshot);
+		}
+
+		this.hitbox = {
+			pos: Point2D.flatAdd(this.pos, -this.size/2),
+			width: this.size,
+			height: this.size
+		};
+
+		damageEnemy(this, this.enemy);
+
+		if (this.destroyed)
+			return;
+
+		this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
+
+		if (drawBounds(this.pos))
+			this.destroyed = true;
+	}
 
 	this.bullets.push(shot);
 
