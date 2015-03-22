@@ -14,7 +14,7 @@ function setCharacter(player, charName) {
 		case 'rynn':
 			player.shot1 = rynn_shot1;
 			player.shot2 = rynn_shot2;
-			player.shot3 = test_shot3;
+			player.shot3 = rynn_shot3;
 			break;
 		default:
 			player.shot1 = default_shot;
@@ -602,6 +602,49 @@ function rynn_shot2() {
 
 			this.parent.bullets.push(subshot);
 		}
+
+		this.hitbox = {
+			pos: Point2D.flatAdd(this.pos, -this.size/2),
+			width: this.size,
+			height: this.size
+		};
+
+		damageEnemy(this, this.enemy);
+
+		if (this.destroyed)
+			return;
+
+		this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
+
+		if (drawBounds(this.pos))
+			this.destroyed = true;
+	}
+
+	this.bullets.push(shot);
+
+}
+
+function rynn_shot3() {
+	if (this.cooldown.shot3 > 0) {
+		return;
+	}
+	else
+		this.cooldown.shot3 = 40;
+
+	var shot = new bullet(defaultSpecs(this));
+
+	// main bullet code
+	shot.speed = 2;
+	shot.size = 7;
+
+	shot.update = function() {
+		if (this.delay > 0) {
+			this.delay--;
+			return;
+		}
+
+		// put code here o wo
+
 
 		this.hitbox = {
 			pos: Point2D.flatAdd(this.pos, -this.size/2),
