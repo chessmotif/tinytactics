@@ -32,16 +32,64 @@ function hikari_shot1() {
 		this.cooldown.shot1 = 50;
 	}
 
-	for (var i = 0; i < 10; i++) {
-		var mainshot = new bullet(defaultSpecs(this));
+	var mainshot = new bullet(defaultSpecs(this));
 
-		mainshot.facing = this.facing - 45 * Math.PI / 180 + 90 * Math.random() * Math.PI / 180;
-		mainshot.speed = 15;
-		mainshot.size = 2;
-		mainshot.time = 5;
+	mainshot.speed = 1;
+	mainshot.time = 35;
+	mainshot.size = 7;
 
-		this.bullets.push(mainshot);
+	mainshot.onDestroy = function() {
+		for (var i = 0; i < 10; i++) {
+			var x = new bullet(defaultSpecs(this.parent));
+
+			x.pos = this.pos;
+			x.facing = this.facing - 45 * Math.PI / 180 + 90 * Math.random() * Math.PI / 180;
+			x.speed = 3;
+			x.size = 2;
+			x.targetFacing = this.facing;
+			x.facingDelay = 20;
+
+			x.update = hikari_shot1_subupdate;
+
+			this.parent.bullets.push(x);
+		}
+	};
+
+	this.bullets.push(mainshot);
+}
+
+function hikari_shot1_subupdate() {
+	if (this.delay > 0) {
+		this.delay--;
+		return;
 	}
+
+	if (this.facingDelay == 0) {
+		if (this.facing + 2*Math.PI > this.targetFacing + 2*Math.PI) {
+			this.facing -= 5 * Math.PI / 180;
+		}
+		else if (this.facing + 2*Math.PI < this.targetFacing + 2*Math.PI) {
+			this.facing += 5 * Math.PI / 180;
+		}
+	}
+	else
+		this.facingDelay--;
+
+	this.hitbox = {
+		pos: Point2D.flatAdd(this.pos, -this.size/2),
+		width: this.size,
+		height: this.size
+	};
+
+	damageEnemy(this, this.enemy);
+
+	if (this.destroyed)
+		return;
+
+	this.pos = Point2D.plus(this.pos, Point2D.toXY(this.speed, this.facing));
+
+	if (drawBounds(this.pos))
+		this.destroyed = true;
 }
 
 function hikari_shot2() {
@@ -468,30 +516,42 @@ function cerise_shot3() {
 	else
 		this.cooldown.shot3 = 60;
 
-	if (this.dashDirection === undefined)
-		return;
+	for (var i = 0; i < 360; i+= 30) {
+		var shot = new bullet(defaultSpecs(this));
 
-	if (!this.inputs.dash)
-		return;
-
-	var startPos = this.pos;
-	var direction = Point2D.scale(this.dashDirection, 75);
-	this.pos = Point2D.plus(this.pos, direction);
-
-	for (var i = 1; i <= 5; i++) {
-		var specs = defaultSpecs(this);
-
-		var pos = Point2D.scale(this.dashDirection, i * 20);
-		pos = Point2D.plus(startPos, pos);
-
-		specs.x = pos.x;
-		specs.y = pos.y;
-
-		var shot = new bullet(specs);
-		shot.facing = Math.atan2(this.enemy.pos.y - shot.pos.y, this.enemy.pos.x - shot.pos.x);
-		shot.delay = i * 5;
 		shot.speed = 5;
 		shot.size = 3;
+		shot.center = shot.pos;
+		shot.theta = i;
+		shot.rotationVelocity = 5;
+
+		shot.update = function() {
+			if (this.delay > 0) {
+				this.delay--;
+				return;
+			}
+
+			this.pos.x = this.center.x + Math.cos(this.theta * Math.PI / 180) * 25;
+			this.pos.y = this.center.y + Math.sin(this.theta * Math.PI / 180) * 25;
+
+			this.theta += this.rotationVelocity;
+
+			this.hitbox = {
+				pos: Point2D.flatAdd(this.pos, -this.size/2),
+				width: this.size,
+				height: this.size
+			};
+
+			damageEnemy(this, this.enemy);
+
+			if (this.destroyed)
+				return;
+
+			this.center = Point2D.plus(this.center, Point2D.toXY(this.speed, this.facing));
+
+			if (drawBounds(this.pos))
+				this.destroyed = true;
+		}
 
 		this.bullets.push(shot);
 	}
@@ -644,7 +704,19 @@ function rynn_shot3() {
 		}
 
 		// put code here o wo
+		this.speed += 0.25;
 
+		if (Math.floor(this.speed) == this.speed && this.speed > 5) {
+			var s = defaultSpecs(this.parent);
+			s.x = this.pos.x;
+			s.y = this.pos.y;
+
+			var b = new bullet(s);
+			b.size = 3;
+			b.speed = 5;
+
+			this.parent.bullets.push(b);
+		}
 
 		this.hitbox = {
 			pos: Point2D.flatAdd(this.pos, -this.size/2),
